@@ -1,3 +1,4 @@
+
 /**
  * Created by Andrew on 3/6/2017.
  */
@@ -234,11 +235,6 @@ function validateArticle(article) {
                 }
             })
         }
-        for (var post in articles) {
-            if (post.id === article.id) {
-                isArticle = false;
-            }
-        }
         return isArticle;
     }
     catch (error) {
@@ -268,17 +264,19 @@ function addArticle(article) {
     return isAdded;
 }
 
-function copyObject(oldObject) {
-    var newObject = null;
-    for (var key in oldObject) {
-        newObject[key] = oldObject[key];
+function copyObject(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
-    return newObject;
+    return copy;
 }
 
 function editArticle(id, article) {
     try {
         var currentArticle = getArticle(id);
+        var removeIndex=articles.indexOf(currentArticle);
         var articleCopy = copyObject(currentArticle);
         var isEdited = true;
         for (var key in article) {
@@ -289,7 +287,7 @@ function editArticle(id, article) {
             isEdited = false;
         }
         else {
-            currentArticle = articleCopy;
+            articles[removeIndex] = articleCopy;
         }
         return isEdited;
     }
@@ -355,7 +353,7 @@ function removeTag(tag) {
 }
 
 var articleToChange = {
-    author: 1234,
+    author: 'New author',
     content: 'New content'
 };
 
