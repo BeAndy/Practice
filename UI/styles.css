@@ -1,4 +1,4 @@
-
+/*Header*/
 header {
     top: 0;
     right: 0;
@@ -11,204 +11,6 @@ header {
     position: fixed;
     width: 100%;
     z-index: 10;
-}
-
-footer {
-    color: black;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin-top: 15px;
-    background-color: #efefef;
-    text-align: center;
-    font-size: 10pt;
-    padding: 1px;
-
-}
-
-body {
-    position: relative;
-    background-color: #FFFAFA;
-}
-
-.logo {
-    height: 60px;
-    max-width: 74vw;
-    min-width: 620px;
-    margin-left: 13vw;
-    margin-top: 50px;
-    border-top: 20px solid #303030;
-    background-color: #303030;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
-}
-
-.main {
-    margin-left: 13vw;
-    max-width: 73vw;
-    min-width: 610px;
-    position: static;
-    background-color: #FFFFFF;
-    border-bottom: 40px solid #FFFFFF;
-    border-top: 25px solid #FFFFFF;
-    border-left: 1vw solid #FFFFFF;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
-}
-
-.main-single {
-    margin-left: 13vw;
-    max-width: 73vw;
-    max-hight: 100px;
-    min-width: 610px;
-    position: static;
-    background-color: #FFFFFF;
-    border-bottom: 40px solid #FFFFFF;
-    border-top: 25px solid #FFFFFF;
-    border-left: 1vw solid #FFFFFF;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
-}
-
-.text-single {
-    text-align: left;
-    max-height: 170px;
-    overflow: hidden;
-    font-size: 12pt;
-
-}
-
-.head-single {
-    max-height: 70px;
-    height: auto;
-    text-align: left;
-    overflow: hidden;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 22pt;
-    font-weight: bold;
-}
-
-.left-top {
-    display: inline-block;
-    width: 300px;
-    height: 730px;
-    border-right: 1px solid rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-
-}
-
-.left-single {
-    overflow: hidden;
-}
-
-.left-bottom {
-    border-top: 1px solid rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-
-}
-
-.central {
-    display: inline-block;
-    width: 290px;
-    height: 730px;
-    overflow: hidden;
-
-}
-
-.right {
-    display: inline-block;
-    width: 470px;
-    height: 730px;
-    margin-left: 10px;
-    border-left: 1px solid rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-
-}
-
-.text-left {
-    text-align: left;
-    width: 300px;
-    max-height: 140px;
-    height: auto;
-    overflow: hidden;
-    font-size: 12pt;
-
-}
-
-.text-central {
-    margin-left: 10px;
-    text-align: left;
-    width: 280px;
-    max-height: 350px;
-    height: auto;
-    overflow: hidden;
-    font-size: 12pt;
-}
-
-.head-left {
-    width: 300px;
-    max-height: 70px;
-    height: auto;
-    text-align: left;
-    overflow: hidden;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 22pt;
-    font-weight: bold;
-}
-
-.head-central {
-    margin-left: 10px;
-    text-align: left;
-    width: 280px;
-    max-height: 120px;
-    height: auto;
-    overflow: hidden;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 22pt;
-    font-weight: bold;
-}
-
-.head-right {
-    text-align: left;
-    margin-left: 10px;
-    width: 460px;
-    max-height: 70px;
-    height: auto;
-    overflow: hidden;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 22pt;
-    font-weight: bold;
-}
-
-input[type=text] {
-    width: 20vw;
-    height: 30px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    font-size: 17px;
-    background-image: url('images/searchIcon.png');
-    background-size: 20px 20px;
-    background-repeat: no-repeat;
-    background-position: 5px 5px;
-    background-color: white;
-    padding: 10px 20px 10px 40px;
-    transition: width 0.4s ease;
-}
-
-input[type=text]:focus {
-    width: 31.5vw;
-}
-
-.img-inNews {
-    height: 50px;
-    margin-left: 15px;
-    width: 175px;
-}
-
-.search-form {
-    margin-left: 10vw;
-    display: inline-block;
 }
 
 .button-filter {
@@ -224,6 +26,7 @@ input[type=text]:focus {
     cursor: pointer;
     border-radius: 2px;
 }
+
 .button-add {
     visibility: hidden;
     margin-left: 55vw;
@@ -257,12 +60,190 @@ input[type=text]:focus {
     display: inline-block;
 }
 
+/*Footer*/
+footer {
+    color: black;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: 15px;
+    background-color: #efefef;
+    text-align: center;
+    font-size: 10pt;
+    padding: 1px;
+
+}
+
+/*Body*/
+body {
+    position: relative;
+    background-color: #FFFAFA;
+}
+
+/*LOGO*/
+.logo {
+    height: 60px;
+    max-width: 74vw;
+    min-width: 620px;
+    margin-left: 13vw;
+    margin-top: 50px;
+    border-top: 20px solid #303030;
+    background-color: #303030;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.main {
+    margin-left: 13vw;
+    max-width: 73vw;
+    min-width: 610px;
+    position: static;
+    background-color: #FFFFFF;
+    border-bottom: 40px solid #FFFFFF;
+    border-top: 25px solid #FFFFFF;
+    border-left: 1vw solid #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+}
+
+/*Single post template*/
+.main-single {
+    margin-left: 13vw;
+    max-width: 73vw;
+    max-hight: 100px;
+    min-width: 610px;
+    position: static;
+    background-color: #FFFFFF;
+    border-bottom: 40px solid #FFFFFF;
+    border-top: 25px solid #FFFFFF;
+    border-left: 1vw solid #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.text-single {
+    text-align: left;
+    max-height: 170px;
+    overflow: hidden;
+    font-size: 12pt;
+
+}
+
+.head-single {
+    max-height: 70px;
+    height: auto;
+    text-align: left;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22pt;
+    font-weight: bold;
+}
+
+.left-single {
+    overflow: hidden;
+}
+
+/*Four posts template*/
+
+/*Left post*/
+.left-top {
+    display: inline-block;
+    width: 300px;
+    height: 730px;
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+
+}
+
+.left-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+
+}
+
+.text-left {
+    text-align: left;
+    width: 300px;
+    max-height: 140px;
+    height: auto;
+    overflow: hidden;
+    font-size: 12pt;
+    position: relative;
+
+}
+
+.head-left {
+    width: 300px;
+    max-height: 70px;
+    height: auto;
+    text-align: left;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22pt;
+    font-weight: bold;
+}
+
+/*Central post*/
+.central {
+    display: inline-block;
+    width: 290px;
+    height: 730px;
+    overflow: hidden;
+
+}
+
+.head-central {
+    margin-left: 10px;
+    text-align: left;
+    width: 280px;
+    max-height: 120px;
+    height: auto;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22pt;
+    font-weight: bold;
+}
+
+.text-central {
+    position: relative;
+    margin-left: 10px;
+    text-align: left;
+    width: 280px;
+    max-height: 350px;
+    height: auto;
+    overflow: hidden;
+    font-size: 12pt;
+}
+
 .img-central {
     object-fit: contain;
     max-height: 250px;
     height: auto;
     margin-left: 15px;
     width: 270px;
+}
+
+/*Right post*/
+.right {
+    display: inline-block;
+    width: 470px;
+    height: 730px;
+    margin-left: 10px;
+    border-left: 1px solid rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+
+}
+
+.head-right {
+    text-align: left;
+    margin-left: 10px;
+    width: 460px;
+    max-height: 70px;
+    height: auto;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22pt;
+    font-weight: bold;
 }
 
 .img-right {
@@ -285,13 +266,13 @@ input[type=text]:focus {
 
 .overlay {
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     left: 10px;
     right: 0;
     overflow: hidden;
     width: 100%;
     height: 0;
-    transition: .5s ease;
+    transition: .7s ease;
     background-color: white;
 }
 
@@ -300,7 +281,7 @@ input[type=text]:focus {
 }
 
 .container:hover .img-right {
-    filter: blur(3px);
+    filter: blur(5px);
 }
 
 .text-right {
@@ -315,6 +296,39 @@ input[type=text]:focus {
     transform: translate(-50%, -50%);
 }
 
+/*Search*/
+input[type=text] {
+    width: 20vw;
+    height: 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 17px;
+    background-image: url('images/searchIcon.png');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    background-color: white;
+    padding: 10px 20px 10px 40px;
+    transition: width 0.4s ease;
+}
+
+input[type=text]:focus {
+    width: 31.5vw;
+}
+
+.img-inNews {
+    height: 50px;
+    margin-left: 15px;
+    width: 175px;
+}
+
+.search-form {
+    margin-left: 10vw;
+    display: inline-block;
+}
+
+/*Post Data*/
 .author {
     font-size: 11pt;
     color: #4CAF50;
@@ -350,23 +364,25 @@ input[type=text]:focus {
     margin-left: 10px;
 }
 
-.control-buttons{
+.control-buttons {
     visibility: hidden;
 }
+
 .button-delete {
     width: 18px;
     height: 18px;
 }
+
 .button-delete-center {
     margin-left: 10px;
     width: 18px;
     height: 18px;
 }
+
 .button-change {
     width: 17px;
     height: 17px;
 }
-
 
 span {
     text-decoration: none;
@@ -400,6 +416,7 @@ a.read-more-center {
     text-align: right;
 }
 
+/*Responsive*/
 @media screen and (max-width: 1480px) and (min-width: 1280px) {
 
     .right {
@@ -465,6 +482,7 @@ a.read-more-center {
 
     .head-right {
         width: 600px;
+        font-size: 22pt
     }
 
     .text-right {
@@ -611,7 +629,6 @@ a.read-more-center {
         width: 35vw
     }
 
-
 }
 
 @media screen and (max-width: 1700px) and (min-width: 1490px) {
@@ -623,6 +640,7 @@ a.read-more-center {
     .text-right {
         width: 28vw;
     }
+
     .img-right {
         left: 5vw;
         margin-left: 1vw;
@@ -779,6 +797,7 @@ a.read-more-center {
     }
 }
 
+/*Pagination*/
 .pagination {
     position: relative;
     display: inline-block;
@@ -803,10 +822,9 @@ a.read-more-center {
     border-radius: 5px;
 }
 
-
-
+/*Filter*/
 .cd-filter {
-    display:none;
+    display: none;
     position: fixed;
     top: 20px;
     left: 0;
@@ -821,6 +839,7 @@ a.read-more-center {
     position: relative;
     margin-bottom: 2em;
 }
+
 .cd-filter-block h4 {
     position: relative;
     margin-bottom: .2em;
@@ -830,6 +849,7 @@ a.read-more-center {
     padding: 30px 10px 10px 20px;
     text-indent: 15px;
 }
+
 .cd-filter-block select {
     position: relative;
     width: 280px;
@@ -837,4 +857,15 @@ a.read-more-center {
     cursor: pointer;
     font-size: 13pt;
     box-shadow: none;
+}
+
+/*Text div shadow*/
+.text-left:after, .text-central:after, .text-right:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 70px;
+    bottom: 0;
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
