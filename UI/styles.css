@@ -81,7 +81,7 @@ body {
 }
 
 /*LOGO*/
-.logo {
+.logo-home {
     height: 60px;
     max-width: 74vw;
     min-width: 620px;
@@ -852,11 +852,31 @@ a.read-more-center {
 
 .cd-filter-block select {
     position: relative;
-    width: 280px;
+    width: 240px;
     padding: .8em;
     cursor: pointer;
     font-size: 13pt;
     box-shadow: none;
+}
+
+.select-style {
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    width: 240px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+}
+
+.select-style select:focus {
+    outline: none;
 }
 
 /*Text div shadow*/

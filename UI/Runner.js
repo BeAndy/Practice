@@ -628,10 +628,5 @@ function startApp() {
 
 function filterShow() {
     var div = document.querySelector('.cd-filter');
-    if (div.style.display !== 'none') {
-        div.style.display = 'none';
-    }
-    else {
-        div.style.display = 'block';
-    }
+    div.style.display = 'block';
 }
