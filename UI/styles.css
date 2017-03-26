@@ -297,7 +297,7 @@ body {
 }
 
 /*Search*/
-input[type=text] {
+input.search {
     width: 20vw;
     height: 30px;
     box-sizing: border-box;
@@ -313,7 +313,7 @@ input[type=text] {
     transition: width 0.4s ease;
 }
 
-input[type=text]:focus {
+input.search:focus {
     width: 31.5vw;
 }
 
@@ -823,30 +823,38 @@ a.read-more-center {
 }
 
 /*Filter*/
-.cd-filter {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 0;
-    width: 280px;
-    height: 100%;
-    background-color: #292929;
-    box-shadow: 4px 4px 20px transparent;
-    z-index: 2;
+.filter-modal {
+    animation-name: filter-animation;
+    animation-duration: 1s;
+}
+
+@keyframes filter-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .cd-filter-block {
-    position: relative;
-    margin-bottom: 2em;
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: black;
+    box-shadow: 4px 4px 20px transparent;
+    animation-name: filter-animation;
+    animation-duration: 1s;
 }
 
 .cd-filter-block h4 {
     position: relative;
-    margin-bottom: .2em;
     font-size: 13pt;
     color: white;
     font-weight: bold;
-    padding: 30px 10px 10px 20px;
+    padding: 30px 10px 5px 10px;
     text-indent: 15px;
 }
 
@@ -888,4 +896,8 @@ a.read-more-center {
     height: 70px;
     bottom: 0;
     background-image: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.no-scroll {
+    overflow: hidden;
 }

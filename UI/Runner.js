@@ -625,8 +625,3 @@ function startApp() {
 
 
 }
-
-function filterShow() {
-    var div = document.querySelector('.cd-filter');
-    div.style.display = 'block';
-}
