@@ -14,10 +14,9 @@
         <p> Welcome!</p>
     </div>
     <div class="login-bar">
-        <button class="button-add" onclick="document.getElementById('edit').style.display='block'">Add news</button>
+        <button class="button-add" onclick="document.getElementById('create').style.display='block'">Add news</button>
         <button class="button-filter" onclick="document.getElementById('filter').style.display='block'">Filter</button>
-        <button class="button-sign" onclick="document.getElementById('login-template').style.display='block'">Sign in
-        </button>
+        <button class="button-sign">Sign in</button>
     </div>
 </header>
 <div id="login-template" class="modal">
@@ -26,7 +25,7 @@
         <h1>Login</h1>
         <input value="" placeholder="Username" id="username"/>
         <input type="password" value="" placeholder="Password" id="password"/>
-        <button>Submit</button>
+        <button id="submit">Submit</button>
     </div>
 </div>
 <div id="filter" class="modal">
@@ -47,74 +46,22 @@
         <div class="view-left">
             <p>
             <div class="view-author">
-                <a class="vew-author-text">Bruno Waterfield</a>
+                <a class="vew-author-text"></a>
                 <div class="view-time">
-                    <a class="vew-time-text">25/2/2017 16:10</a>
+                    <a class="vew-time-text"></a>
                     <div class="view-tag">
-                        <a class="vew-tag-text">#USA,Fillon</a>
+                        <a class="vew-tag-text"></a>
                     </div>
                 </div>
             </div>
             </p>
         </div>
         <div class="view-right">
-            <div class="view-head"> Russia protests: Opposition leader Navalny and hundreds others arrested</div>
+            <div class="view-head"></div>
             <div class="view-text">
-                <img src="images/1.jpg" class="img-view"/><img>
-                Russia's main opposition leader, Alexei Navalny, has been arrested at an anti-corruption protest he
-                organised in the capital, Moscow.
-                Thousands of people joined rallies nationwide, calling for the resignation of Prime Minister Dmitry
-                Medvedev over corruption allegations.
-                At least 500 other protesters were detained in the capital and across the country.
-                Most of the marches were illegal, organised without official permission.
-                Hundreds of other protesters have been detained across the country, activists say.
-                TV pictures showed demonstrators chanting "Down with [Russian President Vladimir] Putin!", "Russia
-                without Putin!" and "Putin is a thief!".
-                Correspondents say the marches appear to be the biggest since anti-government demonstrations in
-                2011/2012.
-                Russia's vociferous opposition leader
-                Navalny vows to continue fight
-                Alexei Navalny was detained as he arrived to join the rally in central Moscow. Protesters then tried to
-                prevent a police van from taking him away.
-                In a tweet after his detention, he urged fellow protesters to continue with the demonstration.
-                "Guys, I'm fine. No need to fight to get me out. Walk along Tverskaya [Moscow main street]. Our topic of
-                the day is the fight against corruption," he said (in Russian).
-                Police officers detain anti-corruption campaigner and opposition figure Alexei Navalny during a rally in
-                MoscowImage copyrightREUTERS
-                Image caption
-                Alexei Navalny was taken by police officers during a rally in central Moscow
-                He later said police stormed the office of his foundation and detained its staff, who were broadcasting
-                the protests live.
-                Demonstrations were also held in Saint Petersburg, Vladivostok, Novosibirsk, Tomsk and several other
-                cities, where arrests had also been reported.
-                Why the protests?
-                Alexei Navalny called for the nationwide protests after he published reports claiming that Mr Medvedev
-                controlled mansions, yachts and vineyards - a fortune that far outstripped his official salary.
-                Mr Medvedev's spokeswoman called the allegations "propagandistic attacks", but the prime minister
-                himself has not commented on the claims.
-                The reports included the accusation that Mr Medvedev had a special house for a duck on one of his
-                properties - and on Sunday, some demonstrators held up images of yellow rubber ducks.
-                Others showed up with their faces painted green, a reference to a recent attack in which Mr Navalny was
-                hit with green liquid.
-                In Moscow, protesters filled Pushkin square and some climbed the monument to poet Alexander Pushkin
-                shouting "impeachment". Turnout was estimated to be between 7,000 and 8,000, according to police.
-                The police said 500 protesters had been arrested in the capital alone, but a rights group, OVD Info, put
-                that number at at least 700.
-                The Kremlin has not commented on the demonstrations. It had said on Friday that plans for an
-                unauthorised protest in central Moscow were an illegal provocation.
-                Police detain a protester in downtown MoscowImage copyrightAP
-                Image caption
-                Hundreds of protesters have been arrested in the capital
-                Police detain protesters in Pushkin Square, downtown MoscowImage copyrightAP
-                Image caption
-                Police were out in large numbers in many Russian cities
-                State TV channels did not cover the demonstrations.
-                Local media reports suggested the authorities pressured students not to attend. In some cities, exams
-                were scheduled on Sunday.
-                Alexei Navalny announced his intention to run for president in 2018 against Vladimir Putin. But he is
-                barred from doing so after being found guilty in a case he said was politicised.
-                He said on his website that protests were planned in 99 cities, but that in 72 of them authorities did
-                not give permission.
+                <img src="" class="img-view"/><img>
+                <p class="view-text-content">
+                </p>
 
             </div>
             <div class="view-empty"></div>
@@ -122,34 +69,56 @@
     </div>
 </div>
 
-<div id="edit" class="modal">
+<div id="create" class="modal">
     <div class="full-view-style animate">
         <div class="view-left">
-            <p>
-                <div class="edit-author">
-                    <a class="vew-author-text">Author</a>
-                    <input type="text" class="edit">
-            <p class="edit-title">#Tags</p>
-            <input type="text" class="edit">
-            <p class="edit-title">Date</p>
-            <div class="view-time">
-                <a class="vew-time-text">25/2/2017 16:10</a>
+            <div class="edit-author">
+                <a class="vew-author-text">Author</a>
+                <input id="new-news-author" type="text" class="edit">
+                <p class="edit-title">#Tags</p>
+                <input id='new-news-tags' type="text" class="edit">
+                <p class="edit-title">ID</p>
+                <p id='new-news-id'>6478</p>
+                <button class="button-save">Add</button>
             </div>
-            <p class="edit-title">ID</p>
-            <p class="view-time">1238953</p>
-            <button class="button-save">Save</button>
         </div>
-        </p>
-    </div>
-    <div class="view-right">
-        <div class="edit-title-head"> Title</div>
-        <input type="text" class="edit-head">
-        <div class="edit-title-head"> Text</div>
-        <textarea  class="edit"rows="20" cols="40"></textarea>
-        <div class="view-empty"></div>
+        <div class="view-right">
+            <div class="edit-title-head"> Title</div>
+            <input type="text" class="edit-head" id="new-news-head">
+            <div class="edit-title-head"> Image URL</div>
+            <input type="text" class="edit-head" id="new-news-img-url">
+            <div class="edit-title-head"> Text</div>
+            <textarea id='new-news-text' class="edit"></textarea>
+            <div class="view-empty"></div>
+        </div>
     </div>
 </div>
+
+<div id="change" class="modal">
+    <div class="full-view-style animate">
+        <div class="view-left">
+            <div class="edit-author">
+                <a class="vew-author-text">Author</a>
+                <input id="change-news-author" type="text" class="edit">
+                <p class="edit-title">#Tags</p>
+                <input id='change-news-tags' type="text" class="edit">
+                <p class="edit-title">ID</p>
+                <p id='change-news-id'>6478</p>
+                <button class="button-save-change">Save</button>
+            </div>
+        </div>
+        <div class="view-right">
+            <div class="edit-title-head"> Title</div>
+            <input type="text" class="edit-head" id="change-news-head">
+            <div class="edit-title-head"> Image URL</div>
+            <input type="text" class="edit-head" id="change-news-img-url">
+            <div class="edit-title-head"> Text</div>
+            <textarea id='change-news-text' class="edit"></textarea>
+            <div class="view-empty"></div>
+        </div>
+    </div>
 </div>
+
 
 
 <div class="logo-home">
@@ -161,7 +130,7 @@
 <div id="post-template-single" style="display: none;">
     <div class="main-single-wrap">
         <div class="main-single">
-            <div class="left-single">
+            <div id="4" class="left-single">
                 <div class="head-single"></div>
                 <br>
                 <div class="text-single"></div>
@@ -173,10 +142,10 @@
                     <span class="author"></span>
                     <span class="time"></span>
                 </p>
-                <a href="" class="read-more">Read more</a>
+                <a class="read-more">Read more</a>
                 <div class="control-buttons">
-                    <a href=' '><img src="images/delete.png" class="button-delete"></a>
-                    <a href=' '><img src="images/edit.png" class="button-change"></a>
+                    <img src="images/delete.png" class="button-delete">
+                    <img src="images/edit.png" class="button-change">
                 </div>
             </div>
         </div>
@@ -185,7 +154,7 @@
 <div id="post-template" style="display: none;">
     <div class="main-wrap">
         <div class="main">
-            <div class="left-top">
+            <div id="0" class="left-top">
                 <div class="head-left"></div>
                 <br>
                 <div class="text-left"></div>
@@ -196,14 +165,14 @@
                     <span class="time"></span>
                 </p>
                 <p>
-                    <a href="" class="read-more">Read more</a>
+                    <a class="read-more">Read more</a>
                 </p>
                 <div class="control-buttons">
-                    <a href=' '><img src="images/delete.png" class="button-delete"></a>
-                    <a href=' '><img src="images/edit.png" class="button-change"></a>
+                    <img src="images/delete.png" class="button-delete">
+                    <img src="images/edit.png" class="button-change">
                 </div>
 
-                <div class="left-bottom">
+                <div id="1" class="left-bottom">
                     <div class="head-left"></div>
                     <br>
                     <div class="text-left"></div>
@@ -214,15 +183,15 @@
                         <span class="time"></span>
                     </p>
                     <p>
-                        <a href="" class="read-more">Read more</a>
+                        <a class="read-more">Read more</a>
                     </p>
                     <div class="control-buttons">
-                        <a href=' '><img src="images/delete.png" class="button-delete"></a>
-                        <a href=' '><img src="images/edit.png" class="button-change"></a>
+                        <img src="images/delete.png" class="button-delete">
+                        <img src="images/edit.png" class="button-change">
                     </div>
                 </div>
             </div>
-            <div class="central">
+            <div id="2" class="central">
                 <img src="" class="img-central" align="middle"/>
                 <div class="head-central"></div>
                 <br>
@@ -234,14 +203,14 @@
                     <span class="time"></span>
                 </p>
                 <p>
-                    <a href="" class="read-more-center">Read more</a>
+                    <a class="read-more-center">Read more</a>
                 </p>
                 <div class="control-buttons">
-                    <a href=' '><img src="images/delete.png" class="button-delete-center"></a>
-                    <a href=' '><img src="images/edit.png" class="button-change"></a>
+                    <img src="images/delete.png" class="button-delete-center">
+                    <img src="images/edit.png" class="button-change">
                 </div>
             </div>
-            <div class="right">
+            <div id="3" class="right">
                 <div class="head-right"></div>
                 <div class="container">
                     <img src="" class="img-right" align="middle"/>
@@ -255,10 +224,10 @@
                             <span class="author"></span>
                             <span class="time"></span>
                         </p>
-                        <a href="" class="read-more">Read more</a>
+                        <a class="read-more">Read more</a>
                         <div class="control-buttons">
-                            <a href=' '><img src="images/delete.png" class="button-delete"></a>
-                            <a href=' '><img src="images/edit.png" class="button-change"></a>
+                            <img src="images/delete.png" class="button-delete">
+                            <img src="images/edit.png" class="button-change">
                         </div>
                     </div>
                 </div>

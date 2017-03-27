@@ -9,6 +9,7 @@ input.edit {
     position: relative;
     overflow: scroll;
 }
+
 input.edit-head {
     margin-left: 3%;
     width: 80%;
@@ -21,21 +22,31 @@ input.edit-head {
     position: relative;
     overflow: scroll;
 }
-p.edit-title{
-    margin-top: 8vh;
+
+p.edit-title {
+    margin-top: 80px;
 
 }
+
+#new-news-id {
+    margin-top: 10px;
+
+}
+
 .edit-title-head {
     margin-top: 1%;
     margin-left: 3%;
-    width: auto;
+    width: 90%;
     height: auto;
     overflow: hidden;
     font-family: 'Times New Roman', Times, serif;
     font-size: 28pt;
     font-weight: bold;
 }
-textarea.edit{
+
+textarea.edit {
+    width: 90%;
+    height: 600px;
     margin-left: 3%;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -43,6 +54,7 @@ textarea.edit{
     font-size: 14px;
 
 }
+
 .edit-author {
     position: relative;
     top: 2vw;
@@ -52,7 +64,22 @@ textarea.edit{
     font-size: 14pt;
     font-weight: bold;
 }
+
 .button-save {
+    margin-top: 7vh;
+    position: relative;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.button-save-change {
     margin-top: 7vh;
     position: relative;
     background-color: #4CAF50;

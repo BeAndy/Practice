@@ -281,7 +281,7 @@ body {
 }
 
 .container:hover .img-right {
-    filter: blur(5px);
+  /*  filter: blur(5px);*/
 }
 
 .text-right {
@@ -900,4 +900,17 @@ a.read-more-center {
 
 .no-scroll {
     overflow: hidden;
+}
+#article-list{
+    animation-name: article-list-animation;
+    animation-duration: 1.5s;
+}
+
+@keyframes article-list-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

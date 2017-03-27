@@ -2,8 +2,7 @@
  * Created by Andrew on 3/6/2017.
  */
 
-var user = 'BeAndy';
-
+var user = null;
 var articleModel = (function () {
     var tags = ['USA', 'Russia', 'Minsk', 'GCHQ', 'EU', 'Prince', 'Fillon', 'Kim', 'SK', 'Turkey'];
 
@@ -12,7 +11,7 @@ var articleModel = (function () {
             id: '1',
             title: 'GCHQ: Russian cyber‑threat to British elections',
             summary: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
-            createdAt: new Date('2017-03-07T13:40:10'),
+            createdAt: new Date('2027-03-07T13:40:10'),
             tags: ['GCHQ', 'Russia'],
             author: 'Kine Shulz',
             content: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
@@ -128,7 +127,8 @@ var articleModel = (function () {
             author: 'Bruno Waterfield',
             content: 'Geert Wilders, the anti-Muslim Dutch MP, threatened today to strip the country’s 400,000 ethnic Turks of their dual citizenship, describing them as a “fifth column”. His call came amid an escalating confrontation between western Europe and Turkey, which has already inflamed Wednesday’s Dutch elections and could overshadow the French presidential poll next month. At the weekend, the Dutch government prevented two Turkish ministers from campaigning in the country',
             imageSrc: "images/6.jpg"
-        }, {
+        },
+        {
             id: '13',
             title: 'GCHQ: Russian cyber‑threat to British elections',
             summary: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
@@ -282,33 +282,43 @@ var articleModel = (function () {
     function validateArticle(article) {
         try {
             var isArticle = !isNaN(article.id);
+            console.log(isArticle);
+
             if (typeof article.title !== "string" || article.title.length > 100) {
                 isArticle = false;
             }
+            console.log(isArticle);
             if (typeof article.summary !== "string" || article.summary.length > 200) {
                 isArticle = false;
             }
+            console.log(isArticle);
             if (typeof article.author !== "string" || article.author.length < 1) {
                 isArticle = false;
             }
+            console.log(isArticle);
             if (typeof article.content !== "string" || article.content.length < 1) {
                 isArticle = false;
             }
-            if (!article.createdAt instanceof Date) {
+            console.log(isArticle);
+            if (!(article.createdAt instanceof Date)) {
                 isArticle = false;
             }
-            if (article.tags.length == 0) {
+            console.log(isArticle);
+            if (article.tags.length === 0) {
                 isArticle = false;
+                console.log(isArticle);
             }
             else {
                 article.tags.forEach(function (currentTag) {
-                    if (tags.indexOf(currentTag) == -1) {
+                    if (tags.indexOf(currentTag) === -1) {
                         isArticle = false;
                     }
                 })
             }
+            console.log(isArticle);
+            console.log(isArticle);
             for (var i = 0; i < articles.length; i++) {
-                if (articles[i] != null) {
+                if (articles[i] !== null) {
                     if (articles[i].id === article.id) {
                         isArticle = false;
                     }
@@ -353,8 +363,8 @@ var articleModel = (function () {
     }
 
     function editArticle(id, article) {
-        try {
             var currentArticle = getArticle(id);
+            console.log(currentArticle.id);
             var removeIndex = articles.indexOf(currentArticle);
             var articleCopy = copyObject(currentArticle);
             var isEdited = true;
@@ -372,10 +382,60 @@ var articleModel = (function () {
             }
             return isEdited;
         }
-        catch (ex) {
-            console.log("Invalid ID");
+        /*var index = 0;
+        var tempPost = {
+            id: "-1",
+            title: "-1",
+            summary: "-1",
+            createdAt: new Date('2017-02-26T20:30:00'),
+            author: "-1",
+            content: "-1.",
+            imageSrc: "-1",
+            tags: []
+        };
+        if (!id) {
+            console.log("ID is null or undefined");
+            return false;
         }
-    }
+        for (var i = 0; i < articles.length; i++) {
+            if (articles[i].id && (articles[i].id === id)) {
+                tempPost =  copyObject(articles[i]);
+                index = i;
+                break;
+            }
+        }
+        if (!article) {
+            console.log("Article is null or undefined");
+            return false;
+        }
+        if (!tempPost) {
+            console.log("Post with that id doesn't exist");
+            return false;
+        }
+        if (article.title) {
+            tempPost.title = article.title;
+        }
+        if (article.summary) {
+            tempPost.summary = article.summary;
+        }
+        if (article.content) {
+            tempPost.content = article.content;
+        }
+        if (article.imageSrc) {
+            tempPost.imageSrc = article.imageSrc;
+        }
+        if (article.tags) {
+            tempPost.tags = article.tags;
+        }
+        articles[index] = null;
+        if (!validateArticle(tempPost)) {
+            console.log("Post not validated");
+            articles[index] = tempPost;
+            return false;
+        }
+        articles[index] = tempPost;
+        console.log("Post successfully edited");
+        return true;*/
 
     function compareDate(first, second) {
         return first.createdAt < second.createdAt ? 1 : -1;
@@ -384,7 +444,7 @@ var articleModel = (function () {
     function getArticles(skip, top, filterConfig) {
         var resultArticles = [];
         try {
-            if (filterConfig == null || Object.keys(filterConfig).length == 0) {
+            if (filterConfig === null || Object.keys(filterConfig).length === 0) {
                 skip = typeof skip !== 'undefined' ? skip : 0;
                 top = typeof top !== 'undefined' ? top : articles.length;
                 resultArticles = articles.sort(compareDate).slice(skip, top);
@@ -392,7 +452,7 @@ var articleModel = (function () {
             else {
                 for (var key in filterConfig) {
                     articles.forEach(function (currentArticle) {
-                        if (currentArticle.hasOwnProperty(key) && currentArticle[key] == filterConfig[key])
+                        if (currentArticle.hasOwnProperty(key) && currentArticle[key] === filterConfig[key])
                             resultArticles.push(currentArticle);
                     })
                 }
@@ -412,7 +472,7 @@ var articleModel = (function () {
     function removeArticle(id) {
         var isRemoved = true;
         var articleToDelete = getArticle(id);
-        if (articleToDelete == null) {
+        if (articleToDelete === null) {
             isRemoved = false;
         }
         else {
@@ -422,13 +482,13 @@ var articleModel = (function () {
     }
 
     function addTag(tag) {
-        if (tags.indexOf(tag) == -1) {
+        if (tags.indexOf(tag) === -1) {
             tags.push(tag);
         }
     }
 
     function removeTag(tag) {
-        if (tags.indexOf(tag) != -1) {
+        if (tags.indexOf(tag) !== -1) {
             tags.splice(articles.indexOf(tag), 1);
         }
     }
@@ -459,7 +519,8 @@ var articleRenderer = (function () {
 
         var articleIndex = articles.indexOf(article);
         var column = post.querySelector('.left-top');
-        if (user != null)
+        column.id = article.id;
+        if (user !== null)
             column.querySelector('.control-buttons').style.visibility = 'visible';
         column.querySelector('.head-left').innerHTML = article.title;
         column.querySelector('.text-left').innerHTML = article.summary;
@@ -467,9 +528,11 @@ var articleRenderer = (function () {
         column.querySelector('.author').innerHTML = article.author;
         column.querySelector('.time').innerHTML = formatDate(article.createdAt);
 
-        if ((article = articles[++articleIndex]) != null) {
+
+        if ((article = articles[++articleIndex]) !== null) {
             column = post.querySelector('.left-bottom');
-            if (user != null)
+            column.id = article.id;
+            if (user !== null)
                 column.querySelector('.control-buttons').style.visibility = 'visible';
             column.querySelector('.head-left').innerHTML = article.title;
             column.querySelector('.text-left').innerHTML = article.summary;
@@ -478,9 +541,10 @@ var articleRenderer = (function () {
             column.querySelector('.time').innerHTML = formatDate(article.createdAt);
         }
 
-        if ((article = articles[++articleIndex]) != null) {
+        if ((article = articles[++articleIndex]) !== null) {
             column = post.querySelector('.central');
-            if (user != null)
+            column.id = article.id;
+            if (user !== null)
                 column.querySelector('.control-buttons').style.visibility = 'visible';
             column.querySelector('.img-central').src = article.imageSrc;
             column.querySelector('.head-central').innerHTML = article.title;
@@ -489,9 +553,10 @@ var articleRenderer = (function () {
             column.querySelector('.author-center').innerHTML = article.author;
             column.querySelector('.time').innerHTML = formatDate(article.createdAt);
         }
-        if ((article = articles[++articleIndex]) != null) {
+        if ((article = articles[++articleIndex]) !== null) {
             column = post.querySelector('.right');
-            if (user != null)
+            column.id = article.id;
+            if (user !== null)
                 column.querySelector('.control-buttons').style.visibility = 'visible';
             column.querySelector('.img-right').src = article.imageSrc;
             column.querySelector('.head-right').innerHTML = article.title;
@@ -508,8 +573,9 @@ var articleRenderer = (function () {
         var postWrap = ARTICLE_TEMPLATE.querySelector('.main-single-wrap').cloneNode(true);
         var post = postWrap.querySelector('.main-single');
         var column = post.querySelector('.left-single');
+        column.id = article.id;
 
-        if (user != null)
+        if (user !== null)
             column.querySelector('.control-buttons').style.visibility = 'visible';
         column.querySelector('.head-single').innerHTML = article.title;
         column.querySelector('.text-single').innerHTML = article.summary;
@@ -536,10 +602,16 @@ var articleRenderer = (function () {
     }
 
     function renderHeader() {
-        if (user != null) {
+        if (user !== null) {
             document.querySelector('.login-bar').lastElementChild.innerHTML = user;
             document.querySelector('.button-sign').innerHTML = 'Sing out';
             document.querySelector('.button-add').style.visibility = 'visible';
+        }
+        else {
+            document.querySelector('.login-bar').lastElementChild.innerHTML = 'Welcome!';
+            document.querySelector('.button-sign').innerHTML = 'Sing in';
+            document.querySelector('.button-add').style.visibility = 'hidden';
+
         }
     }
 
@@ -584,6 +656,7 @@ var articleRenderer = (function () {
     }
 
     return {
+        formatDate: formatDate,
         init: init,
         renderArticles: renderArticles,
         renderHeader: renderHeader,
@@ -593,35 +666,159 @@ var articleRenderer = (function () {
         removeArticlesFromDom: removeArticlesFromDom,
         editArticleInDom: editArticleInDom
 
-    }
+    };
 }());
-document.addEventListener('DOMContentLoaded', startApp);
+var changeID=1;
+function addEventListeners() {
+    var postListNodes = document.getElementById('article-list');
+    postListNodes.addEventListener('click', eventPost);
 
+    var login = document.getElementById('submit');
+    login.addEventListener('click', inputCheck);
+
+    var sign = document.querySelector('.button-sign');
+    sign.addEventListener('click', userStatus);
+
+    var save = document.querySelector('.button-save');
+    save.addEventListener('click', saveArticle);
+
+    var saveChanges = document.querySelector('.button-save-change');
+    saveChanges.addEventListener('click', insertEditedArticle);
+
+
+}
+function insertEditedArticle(changeID) {
+    var newArticle = {
+        title: document.getElementById('change-news-head').value,
+        summary: document.getElementById('change-news-text').value.substr(0, 190),
+        tags: document.getElementById('change-news-tags').value.split(","),
+        author: document.getElementById('change-news-author').value,
+        content: document.getElementById('change-news-text').value,
+        imageSrc: document.getElementById('change-news-img-url').value
+
+    };
+    console.log(newArticle.imageSrc);
+    console.log(changeID);
+    document.getElementById('change').style.display = "none";
+    var body = document.body;
+    body.classList.toggle('no-scroll', false);
+
+}
+function saveArticle() {
+    var newArticle = {
+        id: parseInt(document.getElementById('new-news-id').innerHTML),
+        title: document.getElementById('new-news-head').value,
+        summary: document.getElementById('new-news-text').value.substr(0, 190),
+        createdAt: new Date(),
+        tags: document.getElementById('new-news-tags').value.split(" "),
+        author: document.getElementById('new-news-author').value,
+        content: document.getElementById('new-news-text').value,
+        imageSrc: document.getElementById('new-news-img-url').value
+
+    };
+    articleRenderer.insertArticleInDom(newArticle);
+    document.getElementById('create').style.display = "none";
+    var body = document.body;
+    body.classList.toggle('no-scroll', false);
+
+}
+function eventPost(event) {
+    if ((event.target.className === "button-delete") || (event.target.className === "button-delete-center")) {
+        var currentEvent = event.target.parentElement;
+        while (!currentEvent.hasAttribute("id")) {
+            currentEvent = currentEvent.parentElement;
+        }
+        var articleToDelete = parseInt(currentEvent.getAttribute('id'));
+        articleRenderer.removeArticleFromDom(articleToDelete);
+    }
+    if ((event.target.className === "read-more") || (event.target.className === "read-more-center")) {
+        var currentEvent = event.target.parentElement;
+        while (!currentEvent.hasAttribute("id")) {
+            currentEvent = currentEvent.parentElement;
+        }
+        var articleToView = parseInt(currentEvent.getAttribute('id'));
+        viewArticle(articleToView);
+    }
+    if (event.target.className === "button-change") {
+        var currentEvent = event.target.parentElement;
+        while (!currentEvent.hasAttribute("id")) {
+            currentEvent = currentEvent.parentElement;
+        }
+        var changeID = parseInt(currentEvent.getAttribute('id'));
+        saveEditedArticle(changeID);
+    }
+}
+function saveEditedArticle(articleId) {
+    document.getElementById('change').style.display = 'block';
+    document.body.classList.toggle('no-scroll', true);
+    var currentArticle = articleModel.getArticle(articleId);
+    document.getElementById('change-news-author').value = currentArticle.author;
+    document.getElementById('change-news-tags').value = currentArticle.tags.join();
+    document.getElementById('change-news-head').value = currentArticle.title;
+    document.getElementById('change-news-id').innerHTML = currentArticle.id;
+    document.getElementById('change-news-img-url').value = currentArticle.imageSrc;
+    document.getElementById('change-news-text').value = currentArticle.content;
+
+
+}
+
+function viewArticle(articleId) {
+    document.getElementById('view').style.display = 'block';
+    document.body.classList.toggle('no-scroll', true);
+    var currentArticle = articleModel.getArticle(articleId);
+    document.querySelector('.vew-author-text').innerHTML = currentArticle.author;
+    document.querySelector('.vew-time-text').innerHTML = currentArticle.createdAt;
+    document.querySelector('.vew-tag-text').innerHTML = currentArticle.tags.join();
+    document.querySelector('.vew-time-text').innerHTML = articleRenderer.formatDate(currentArticle.createdAt);
+    document.querySelector('.view-head').innerHTML = currentArticle.title;
+    document.querySelector('.img-view').src = currentArticle.imageSrc;
+    document.querySelector('.view-text-content').innerHTML = currentArticle.content;
+
+
+}
+function userStatus() {
+    if (user !== null) {
+        logOut();
+    }
+    else {
+        document.getElementById('login-template').style.display = 'block';
+    }
+
+}
+function inputCheck() {
+    var inputUser = document.getElementById('username').value;
+    var inputPass = document.getElementById('password').value;
+    if (checkLogin(inputUser, inputPass)) {
+
+        document.getElementById('login-template').style.display = 'none';
+        articleRenderer.removeArticlesFromDom();
+        articleRenderer.renderArticles();
+        articleRenderer.renderHeader();
+        articleRenderer.renderFilter();
+    } else {
+        alert("So sorry =/")
+    }
+}
+function checkLogin(log, pass) {
+    if (log === 'a' && pass === 'a') {
+        user = 'BeAndy';
+        return true;
+    }
+    return false;
+}
+function logOut() {
+    user = null;
+    articleRenderer.removeArticlesFromDom();
+    articleRenderer.renderArticles();
+    articleRenderer.renderHeader();
+    articleRenderer.renderFilter();
+}
+
+document.addEventListener('DOMContentLoaded', startApp);
 function startApp() {
     articleRenderer.init();
     articleRenderer.renderArticles();
     articleRenderer.renderHeader();
     articleRenderer.renderFilter();
-    articleRenderer.removeArticlesFromDom();
-    var validArticle = {
-        id: '30',
-        title: 'NEWARTICLE',
-        summary: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun',
-        createdAt: new Date('2017-02-27T23:10:54'),
-        tags: ['USA', 'Minsk'],
-        author: 'Alex Fine',
-        content: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun',
-        imageSrc: "images/1.jpg"
-
-
-    };
-    var changeArticle = {
-        title: 'BRANDNEW'
-    };
-    articleRenderer.insertArticleInDom(validArticle);
-    articleRenderer.removeArticleFromDom(30);
-    articleRenderer.insertArticleInDom(validArticle);
-    articleRenderer.editArticleInDom(30, changeArticle);
-
-
 }
+addEventListeners();
