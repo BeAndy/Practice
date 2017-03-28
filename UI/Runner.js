@@ -382,61 +382,6 @@ var articleModel = (function () {
             }
             return isEdited;
         }
-        /*var index = 0;
-        var tempPost = {
-            id: "-1",
-            title: "-1",
-            summary: "-1",
-            createdAt: new Date('2017-02-26T20:30:00'),
-            author: "-1",
-            content: "-1.",
-            imageSrc: "-1",
-            tags: []
-        };
-        if (!id) {
-            console.log("ID is null or undefined");
-            return false;
-        }
-        for (var i = 0; i < articles.length; i++) {
-            if (articles[i].id && (articles[i].id === id)) {
-                tempPost =  copyObject(articles[i]);
-                index = i;
-                break;
-            }
-        }
-        if (!article) {
-            console.log("Article is null or undefined");
-            return false;
-        }
-        if (!tempPost) {
-            console.log("Post with that id doesn't exist");
-            return false;
-        }
-        if (article.title) {
-            tempPost.title = article.title;
-        }
-        if (article.summary) {
-            tempPost.summary = article.summary;
-        }
-        if (article.content) {
-            tempPost.content = article.content;
-        }
-        if (article.imageSrc) {
-            tempPost.imageSrc = article.imageSrc;
-        }
-        if (article.tags) {
-            tempPost.tags = article.tags;
-        }
-        articles[index] = null;
-        if (!validateArticle(tempPost)) {
-            console.log("Post not validated");
-            articles[index] = tempPost;
-            return false;
-        }
-        articles[index] = tempPost;
-        console.log("Post successfully edited");
-        return true;*/
-
     function compareDate(first, second) {
         return first.createdAt < second.createdAt ? 1 : -1;
     }
@@ -687,7 +632,8 @@ function addEventListeners() {
 
 
 }
-function insertEditedArticle(changeID) {
+function insertEditedArticle() {
+    var currentID=parseInt(document.getElementById('change-news-id').innerHTML);
     var newArticle = {
         title: document.getElementById('change-news-head').value,
         summary: document.getElementById('change-news-text').value.substr(0, 190),
@@ -698,7 +644,8 @@ function insertEditedArticle(changeID) {
 
     };
     console.log(newArticle.imageSrc);
-    console.log(changeID);
+    console.log(currentID);
+    articleRenderer.editArticleInDom(currentID,newArticle);
     document.getElementById('change').style.display = "none";
     var body = document.body;
     body.classList.toggle('no-scroll', false);
