@@ -1,6 +1,7 @@
 .full-view-style {
     margin-top: 1vh;
     margin-left: 10vw;
+    max-height: 80vh;
     width: 80vw;
     min-width: 610px;
     position: static;
@@ -83,7 +84,7 @@
     font-size: 16pt;
 }
 .view-empty{
-    margin-top: 10vh;
+    margin-top: 5vh;
 }
 @media screen and (max-width: 1600px) and (min-width: 1500px) {
     .view-author {

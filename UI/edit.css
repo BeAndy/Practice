@@ -46,7 +46,7 @@ p.edit-title {
 
 textarea.edit {
     width: 90%;
-    height: 600px;
+    height: 40vh;
     margin-left: 3%;
     box-sizing: border-box;
     border: 2px solid #ccc;
