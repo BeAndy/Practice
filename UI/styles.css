@@ -81,14 +81,14 @@ body {
 }
 
 /*LOGO*/
-.logo {
+.logo-home {
     height: 60px;
     max-width: 74vw;
     min-width: 620px;
     margin-left: 13vw;
     margin-top: 50px;
-    border-top: 20px solid #303030;
-    background-color: #303030;
+    border-top: 20px solid #090909;
+    background-color: #090909;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
 }
@@ -103,6 +103,7 @@ body {
     border-top: 25px solid #FFFFFF;
     border-left: 1vw solid #FFFFFF;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
 
 }
 
@@ -281,7 +282,7 @@ body {
 }
 
 .container:hover .img-right {
-    filter: blur(5px);
+  /*  filter: blur(5px);*/
 }
 
 .text-right {
@@ -297,7 +298,7 @@ body {
 }
 
 /*Search*/
-input[type=text] {
+input.search {
     width: 20vw;
     height: 30px;
     box-sizing: border-box;
@@ -313,7 +314,7 @@ input[type=text] {
     transition: width 0.4s ease;
 }
 
-input[type=text]:focus {
+input.search:focus {
     width: 31.5vw;
 }
 
@@ -369,17 +370,20 @@ input[type=text]:focus {
 }
 
 .button-delete {
+    cursor: pointer;
     width: 18px;
     height: 18px;
 }
 
 .button-delete-center {
+    cursor: pointer;
     margin-left: 10px;
     width: 18px;
     height: 18px;
 }
 
 .button-change {
+    cursor: pointer;
     width: 17px;
     height: 17px;
 }
@@ -399,6 +403,7 @@ span.center {
 }
 
 a.read-more {
+    cursor: pointer;
     text-decoration: none;
     font-size: 11pt;
     color: #4CAF50;
@@ -408,6 +413,7 @@ a.read-more {
 }
 
 a.read-more-center {
+    cursor: pointer;
     margin-left: 10px;
     text-decoration: none;
     font-size: 11pt;
@@ -798,65 +804,116 @@ a.read-more-center {
 }
 
 /*Pagination*/
-.pagination {
+
+.show-more {
     position: relative;
     display: inline-block;
+    background-color: white;
     top: 10px;
+    cursor: pointer;
+    padding: 0 .5em;
+    color: #292929;
+    font-size: 1.1em;
+    line-height: 2;
+    border: 1px solid #4caf50;
+    border-radius: .25em;
+    font-weight: bold;
+    box-shadow: 4px 4px 20px transparent;
 }
 
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 5px;
-}
-
-.pagination a:hover:not(.active) {
-    background-color: #ddd;
-    border-radius: 5px;
+.show-more:hover {
+    color: #656565;
 }
 
 /*Filter*/
-.cd-filter {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 0;
-    width: 280px;
-    height: 100%;
-    background-color: #292929;
-    box-shadow: 4px 4px 20px transparent;
-    z-index: 2;
+.filter-modal {
+    animation-name: filter-animation;
+    animation-duration: 1s;
+}
+
+@keyframes filter-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .cd-filter-block {
-    position: relative;
-    margin-bottom: 2em;
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: black;
+    box-shadow: 4px 4px 20px transparent;
 }
 
 .cd-filter-block h4 {
     position: relative;
-    margin-bottom: .2em;
     font-size: 13pt;
     color: white;
     font-weight: bold;
-    padding: 30px 10px 10px 20px;
+    padding: 30px 10px 5px 10px;
     text-indent: 15px;
+    user-select: none;
 }
+.date-input{
+    /*margin-top: 30px;*/
+    position: relative;
+    margin-left: 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    width: 240px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+    font-size: 15pt;
 
+}
 .cd-filter-block select {
     position: relative;
-    width: 280px;
+    width: 240px;
     padding: .8em;
     cursor: pointer;
     font-size: 13pt;
     box-shadow: none;
+}
+.button-filter-apply {
+    margin-top: 40px;
+    margin-left: 20px;
+    position: relative;
+    cursor: pointer;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 34px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 2px;
+}
+
+.select-style {
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    width: 240px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+}
+
+.select-style select:focus {
+    outline: none;
 }
 
 /*Text div shadow*/
@@ -868,4 +925,25 @@ a.read-more-center {
     height: 70px;
     bottom: 0;
     background-image: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+#article-list{
+    animation-name: article-list-animation;
+    animation-duration: 1.5s;
+}
+
+@keyframes article-list-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.animate-div{
+    animation-name: article-list-animation;
+    animation-duration: 1.5s;
 }

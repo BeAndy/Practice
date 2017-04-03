@@ -1,0 +1,94 @@
+input.edit {
+    width: 80%;
+    height: 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    top: 12px;
+    position: relative;
+    overflow: scroll;
+}
+
+input.edit-head {
+    margin-left: 3%;
+    width: 80%;
+    height: 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    top: 12px;
+    position: relative;
+    overflow: scroll;
+}
+
+p.edit-title {
+    margin-top: 80px;
+
+}
+
+#new-news-id {
+    margin-top: 10px;
+
+}
+
+.edit-title-head {
+    margin-top: 1%;
+    margin-left: 3%;
+    width: 90%;
+    height: auto;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 28pt;
+    font-weight: bold;
+}
+
+textarea.edit {
+    width: 90%;
+    height: 40vh;
+    margin-left: 3%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+
+}
+
+.edit-author {
+    position: relative;
+    top: 2vw;
+    width: 10vw;
+    color: black;
+    line-height: 0;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.button-save {
+    margin-top: 7vh;
+    position: relative;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.button-save-change {
+    margin-top: 7vh;
+    position: relative;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+}
