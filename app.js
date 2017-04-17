@@ -1,0 +1,15 @@
+/**
+ * Created by Andrew on 4/4/2017.
+ */
+
+var express = require('express');
+var app = express();
+app.use(express.static('public/UI'));
+console.log(express.static('public'));
+
+app.get('/index', function (req, res) {
+    res.send('Hello World!');
+});
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!')
+});

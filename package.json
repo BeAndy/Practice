@@ -1,0 +1,23 @@
+{
+  "name": "innews",
+  "version": "1.0.0",
+  "description": "INnews Portal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BeAndy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BeAndy/Practice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BeAndy/Practice.git"
+  },
+  "homepage": "https://github.com/BeAndy/Practice#readme",
+  "devDependencies": {}
+}
