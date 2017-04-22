@@ -10,131 +10,7 @@ var tagsLoaded = false;
 
 var articleModel = (function () {
     var tags = ['USA', 'Russia', 'Minsk', 'GCHQ', 'EU', 'Prince', 'Fillon', 'Kim', 'SK', 'Turkey'];
-
-    var articles = [
-        {
-            id: '1',
-            title: 'GCHQ: Russian cyber‑threat to British elections',
-            summary: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
-            createdAt: new Date('2017-04-07T13:40:10'),
-            tags: ['GCHQ', 'Russia'],
-            author: 'Kine Shulz',
-            content: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
-            imageSrc: "images/1.jpg"
-        },
-        {
-            id: '2',
-            title: 'May ‘will ask EU to pay back our £9bn’',
-            summary: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun — dramatically cutting Britain’s final bill.Senior government sources say that when the prime minister triggers article 50, she will point out that Britain is entitled to the return of funds held by the European Investment Bank (EIB).',
-            createdAt: new Date('2017-01-10T23:11:00'),
-            tags: ['USA', 'EU'],
-            author: 'Tim Shipman',
-            content: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun — dramatically cutting Britain’s final bill.Senior government sources say that when the prime minister triggers article 50, she will point out that Britain is entitled to the return of funds held by the European Investment Bank (EIB).',
-            imageSrc: "images/2.jpg"
-        },
-        {
-            id: '3',
-            title: 'Prince teases Spreadsheet Phil over budget',
-            summary: 'One of them is known for his verbal gaffes and the other was once seen as a safe pair of hands, but when Philip met Philip last week it was the chancellor of the exchequer who was on the receiving end for blundering in public. Under fire from MPs over his budget, which raised national insurance for self-employed',
-            createdAt: new Date('2016-02-11T15:10:13'),
-            tags: ['EU', 'Prince'],
-            author: 'Tim Wilson',
-            content: 'One of them is known for his verbal gaffes and the other was once seen as a safe pair of hands, but when Philip met Philip last week it was the chancellor of the exchequer who was on the receiving end for blundering in public. Under fire from MPs over his budget, which raised national insurance for self-employed',
-            imageSrc: "images/3.jpg"
-
-        },
-        {
-            id: '4',
-            title: 'Fillon’s campaign hit by antisemitism claims',
-            summary: 'François Fillon faced new scandals today with supporters accused of antisemitism and a row over bespoke clothes costing €48,450.Mr Fillon, 63, once the favourite for the French presidency, was forced apologise after his opposition Republicans tweeted a caricature of Emmanuel Macron, the independent centrist.',
-            createdAt: new Date('2017-02-12T13:10:40'),
-            tags: ['USA', 'Fillon'],
-            author: 'Adam Sage',
-            content: 'François Fillon faced new scandals today with supporters accused of antisemitism and a row over bespoke clothes costing €48,450.Mr Fillon, 63, once the favourite for the French presidency, was forced apologise after his opposition Republicans tweeted a caricature of Emmanuel Macron, the independent centrist.',
-            imageSrc: "images/4.jpg"
-        },
-        {
-            id: '5',
-            title: 'South Korea set to cosy up to Kim',
-            summary: 'The man poised to become South Korea’s new leader has vowed to “embrace” the communist North in what could further complicate American efforts to rein in Kim Jong-un, North Korea’s increasingly erratic leader. Moon Jae-in is the liberal frontrunner in a South Korean presidential election expected in May after last week’s impeachment of the country’s first female leader. On Friday the constitutional court ratified the removal of Park Geun-hye, a conservative who had taken a hard line against Pyongyang.',
-            createdAt: new Date('2017-03-13T23:14:15'),
-            tags: ['Kim', 'SK'],
-            author: 'Philip Sherwell',
-            content: 'The man poised to become South Korea’s new leader has vowed to “embrace” the communist North in what could further complicate American efforts to rein in Kim Jong-un, North Korea’s increasingly erratic leader. Moon Jae-in is the liberal frontrunner in a South Korean presidential election expected in May after last week’s impeachment of the country’s first female leader. On Friday the constitutional court ratified the removal of Park Geun-hye, a conservative who had taken a hard line against Pyongyang.',
-            imageSrc: "images/5.jpg"
-        },
-        {
-            id: '6',
-            title: 'Far right seize on Turkey’s confrontation with Europe',
-            summary: 'Geert Wilders, the anti-Muslim Dutch MP, threatened today to strip the country’s 400,000 ethnic Turks of their dual citizenship, describing them as a “fifth column”. His call came amid an escalating confrontation between western Europe and Turkey, which has already inflamed Wednesday’s Dutch elections and could overshadow the French presidential poll next month. At the weekend, the Dutch government prevented two Turkish ministers from campaigning in the country',
-            createdAt: new Date('2017-03-14T13:11:15'),
-            tags: ['EU', 'Turkey'],
-            author: 'Bruno Waterfield',
-            content: 'Geert Wilders, the anti-Muslim Dutch MP, threatened today to strip the country’s 400,000 ethnic Turks of their dual citizenship, describing them as a “fifth column”. His call came amid an escalating confrontation between western Europe and Turkey, which has already inflamed Wednesday’s Dutch elections and could overshadow the French presidential poll next month. At the weekend, the Dutch government prevented two Turkish ministers from campaigning in the country',
-            imageSrc: "images/6.jpg"
-        },
-        {
-            id: '7',
-            title: 'GCHQ: Russian cyber‑threat to British elections',
-            summary: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
-            createdAt: new Date('2017-02-15T13:40:10'),
-            tags: ['GCHQ', 'Russia'],
-            author: 'Kine Shulz',
-            content: 'Spies at GCHQ have called an emergency summit with Britain’s political parties after warning them that they are at risk of Russian cyber-attacks disrupting the next general election.Security sources say GCHQ now regards protecting the political system from foreign hackers as “priority work”. They fear that Kremlin-backed hackers could steal and leak internal emails or publish private databases of voters’ political views in an attempt to damage the standing of political parties with the public.',
-            imageSrc: "images/1.jpg"
-        },
-
-        {
-            id: '8',
-            title: 'May ‘will ask EU to pay back our £9bn’',
-            summary: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun — dramatically cutting Britain’s final bill.Senior government sources say that when the prime minister triggers article 50, she will point out that Britain is entitled to the return of funds held by the European Investment Bank (EIB).',
-            createdAt: new Date('2017-01-27T23:11:00'),
-            tags: ['USA', 'EU'],
-            author: 'Kine Shulz',
-            content: 'Theresa May will call on Brussels to hand back £9bn of UK assets held by an EU bank when she fires the Brexit starting gun — dramatically cutting Britain’s final bill.Senior government sources say that when the prime minister triggers article 50, she will point out that Britain is entitled to the return of funds held by the European Investment Bank (EIB).',
-            imageSrc: "images/2.jpg"
-        },
-        {
-            id: '9',
-            title: 'Prince teases Spreadsheet Phil over budget',
-            summary: 'One of them is known for his verbal gaffes and the other was once seen as a safe pair of hands, but when Philip met Philip last week it was the chancellor of the exchequer who was on the receiving end for blundering in public. Under fire from MPs over his budget, which raised national insurance for self-employed',
-            createdAt: new Date('2016-01-29T15:10:13'),
-            tags: ['EU', 'Prince'],
-            author: 'Kine Shulz',
-            content: 'One of them is known for his verbal gaffes and the other was once seen as a safe pair of hands, but when Philip met Philip last week it was the chancellor of the exchequer who was on the receiving end for blundering in public. Under fire from MPs over his budget, which raised national insurance for self-employed',
-            imageSrc: "images/3.jpg"
-        },
-        {
-            id: '10',
-            title: 'Fillon’s campaign hit by antisemitism claims',
-            summary: 'François Fillon faced new scandals today with supporters accused of antisemitism and a row over bespoke clothes costing €48,450.Mr Fillon, 63, once the favourite for the French presidency, was forced apologise after his opposition Republicans tweeted a caricature of Emmanuel Macron, the independent centrist.',
-            createdAt: new Date('2017-01-25T13:10:40'),
-            tags: ['USA', 'Fillon'],
-            author: 'Kine Shulz',
-            content: 'François Fillon faced new scandals today with supporters accused of antisemitism and a row over bespoke clothes costing €48,450.Mr Fillon, 63, once the favourite for the French presidency, was forced apologise after his opposition Republicans tweeted a caricature of Emmanuel Macron, the independent centrist.',
-            imageSrc: "images/4.jpg"
-        },
-        {
-            id: '11',
-            title: 'South Korea set to cosy up to Kim',
-            summary: 'The man poised to become South Korea’s new leader has vowed to “embrace” the communist North in what could further complicate American efforts to rein in Kim Jong-un, North Korea’s increasingly erratic leader. Moon Jae-in is the liberal frontrunner in a South Korean presidential election expected in May after last week’s impeachment of the country’s first female leader. On Friday the constitutional court ratified the removal of Park Geun-hye, a conservative who had taken a hard line against Pyongyang.',
-            createdAt: new Date('2017-02-17T23:29:15'),
-            tags: ['Kim', 'SK'],
-            author: 'Kine Shulz',
-            content: 'The man poised to become South Korea’s new leader has vowed to “embrace” the communist North in what could further complicate American efforts to rein in Kim Jong-un, North Korea’s increasingly erratic leader. Moon Jae-in is the liberal frontrunner in a South Korean presidential election expected in May after last week’s impeachment of the country’s first female leader. On Friday the constitutional court ratified the removal of Park Geun-hye, a conservative who had taken a hard line against Pyongyang.',
-            imageSrc: "images/5.jpg"
-        },
-        {
-            id: '12',
-            title: 'Far right seize on Turkey’s confrontation with Europe',
-            summary: 'Geert Wilders, the anti-Muslim Dutch MP, threatened today to strip the country’s 400,000 ethnic Turks of their dual citizenship, describing them as a “fifth column”. His call came amid an escalating confrontation between western Europe and Turkey, which has already inflamed Wednesday’s Dutch elections and could overshadow the French presidential poll next month. At the weekend, the Dutch government prevented two Turkish ministers from campaigning in the country',
-            createdAt: new Date('2017-03-24T13:11:15'),
-            tags: ['EU', 'Turkey'],
-            author: 'Bruno Waterfield',
-            content: 'Geert Wilders, the anti-Muslim Dutch MP, threatened today to strip the country’s 400,000 ethnic Turks of their dual citizenship, describing them as a “fifth column”. His call came amid an escalating confrontation between western Europe and Turkey, which has already inflamed Wednesday’s Dutch elections and could overshadow the French presidential poll next month. At the weekend, the Dutch government prevented two Turkish ministers from campaigning in the country',
-            imageSrc: "images/3.jpg"
-        }
-    ];
+    var articles = requestsHandler.getArticles().slice();
 
     function validateArticle(article) {
         try {
@@ -173,7 +49,6 @@ var articleModel = (function () {
                 })
             }
             console.log(isArticle);
-            console.log(isArticle);
             for (var i = 0; i < articles.length; i++) {
                 if (articles[i] !== null) {
                     if (articles[i].id === article.id) {
@@ -181,6 +56,7 @@ var articleModel = (function () {
                     }
                 }
             }
+            console.log(isArticle);
             return isArticle;
         }
         catch (error) {
@@ -198,13 +74,7 @@ var articleModel = (function () {
     }
 
     function getArticle(id) {
-        var resultArticle = null;
-        articles.forEach(function (currentArticle) {
-            if (currentArticle.id == id) {
-                resultArticle = currentArticle;
-            }
-        });
-        return resultArticle;
+        return requestsHandler.getArticle(id);
     }
 
     function addArticle(article) {
@@ -213,9 +83,10 @@ var articleModel = (function () {
             isAdded = false;
         }
         else {
-            articles.push(article);
+            article.id = article.id.toString();
+            requestsHandler.addArticle(article);
+            articles = requestsHandler.getArticles();
         }
-        fillArticlesStorage();
         return isAdded;
     }
 
@@ -230,23 +101,26 @@ var articleModel = (function () {
 
     function editArticle(id, article) {
         var currentArticle = getArticle(id);
-        console.log(currentArticle.id);
         var removeIndex = articles.indexOf(currentArticle);
         var articleCopy = copyObject(currentArticle);
         var isEdited = true;
-        articles[removeIndex] = null;
+        removeArticle(currentArticle.id);
         for (var key in article) {
-            if (articleCopy.hasOwnProperty(key))
+            if (articleCopy.hasOwnProperty(key)) {
                 articleCopy[key] = article[key];
+            }
         }
         if (!validateArticle(articleCopy)) {
             isEdited = false;
-            articles[removeIndex] = currentArticle;
+            requestsHandler.addArticle(currentArticle);
+            articles = requestsHandler.getArticles();
         }
         else {
-            articles[removeIndex] = articleCopy;
+            articleCopy.id = articleCopy.id.toString();
+            requestsHandler.addArticle(articleCopy);
+            articles = requestsHandler.getArticles();
         }
-        fillArticlesStorage();
+        console.log('Validate:' + validateArticle(articleCopy));
         return isEdited;
     }
 
@@ -299,9 +173,9 @@ var articleModel = (function () {
             isRemoved = false;
         }
         else {
-            articles.splice(articles.indexOf(articleToDelete), 1);
+            requestsHandler.deleteArticle(id);
+            articles = requestsHandler.getArticles().slice();
         }
-        fillArticlesStorage();
         return isRemoved;
     }
 
@@ -316,26 +190,6 @@ var articleModel = (function () {
             tags.splice(articles.indexOf(tag), 1);
         }
     }
-
-    function fillArticlesStorage() {
-        localStorage.clear('articlesKey');
-        localStorage.setItem('articlesKey', JSON.stringify(articles));
-    }
-
-    var articlesData = JSON.parse(localStorage.getItem('articlesKey'));
-    if (!articlesData)
-        fillArticlesStorage();
-    else {
-        articles = articlesData;
-        articles.forEach(function (currentElement) {
-            currentElement.createdAt = new Date(currentElement.createdAt);
-        });
-    }
-
-    window.beforeunload = function () {
-        localStorage.setItem('articlesKey', JSON.stringify(articles));
-    };
-
     return {
         getArticles: getArticles,
         validateArticle: validateArticle,
