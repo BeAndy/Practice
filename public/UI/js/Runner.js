@@ -1,9 +1,12 @@
-/* global document requestsHandler Option event alert*/
+/* global document requestsHandler Option event alert app*/
+
+let articlesNumber = requestsHandler.getArticlesNumber();
 let user = 'BeAndy';
 let loadedArticles = 8;
 let filter = null;
-let lastID = 12;
+let lastID = ++articlesNumber;
 let tagsLoaded = false;
+console.log(lastID);
 
 function getById(currentId) {
   return document.getElementById(currentId);
@@ -26,7 +29,6 @@ const articleModel = (function () {
     'SK',
     'Turkey',
   ];
-  let articles = requestsHandler.getArticles().slice();
 
   function validateArticle(article) {
     let isArticle = !isNaN(article.id);
@@ -54,22 +56,11 @@ const articleModel = (function () {
         }
       });
     }
-    for (let i = 0; i < articles.length; i++) {
-      if (articles[i] !== null) {
-        if (articles[i].id === article.id) {
-          isArticle = false;
-        }
-      }
-    }
     return isArticle;
   }
 
   function getTags() {
     return tags;
-  }
-
-  function getArticlesArray() {
-    return articles;
   }
 
   function getArticle(id) {
@@ -83,7 +74,6 @@ const articleModel = (function () {
     } else {
       article.id = article.id.toString();
       requestsHandler.addArticle(article);
-      articles = requestsHandler.getArticles();
     }
     return isAdded;
   }
@@ -106,7 +96,6 @@ const articleModel = (function () {
       isRemoved = false;
     } else {
       requestsHandler.deleteArticle(id);
-      articles = requestsHandler.getArticles().slice();
     }
     return isRemoved;
   }
@@ -124,54 +113,11 @@ const articleModel = (function () {
     if (!validateArticle(articleCopy)) {
       isEdited = false;
       requestsHandler.addArticle(currentArticle);
-      articles = requestsHandler.getArticles();
     } else {
       articleCopy.id = articleCopy.id.toString();
       requestsHandler.addArticle(articleCopy);
-      articles = requestsHandler.getArticles();
     }
     return isEdited;
-  }
-
-  function comparator(first, second) {
-    return first.createdAt < second.createdAt ? 1 : -1;
-  }
-  function compareYear(first, second) {
-    return first.createdAt.getFullYear() === second.createdAt.getFullYear();
-  }
-  function compareMonth(first, second) {
-    return first.createdAt.getMonth() === second.createdAt.getMonth();
-  }
-  function compareDate(first, second) {
-    return first.createdAt.getDate() === second.createdAt.getDate();
-  }
-  function getArticles(skip, top, filter) {
-    skip = skip || 0;
-    top = top || articles.length;
-    let result = articles.sort(comparator).slice(skip, top);
-    if (filter !== null) {
-      if (filter.createdAt) {
-        result = result.filter((article) => {
-          let isValid = compareYear(article, filter);
-          isValid = compareMonth(article, filter);
-          isValid = compareDate(article, filter);
-          return isValid;
-        });
-      }
-      if (filter.author) {
-        result = result.filter(article =>
-        article.author.toLowerCase() === filter.author.toLowerCase());
-      }
-      if (filter.tags) {
-        result = result.filter(article => filter.tags.every(currentTag =>
-        article.tags.join(' ').indexOf(currentTag) !== -1));
-      }
-      if (filter.title) {
-        result = result.filter(article => article.title.includes(filter.title));
-      }
-      result.sort(comparator);
-    }
-    return result;
   }
 
   function addTag(tag) {
@@ -180,22 +126,14 @@ const articleModel = (function () {
     }
   }
 
-  function removeTag(tag) {
-    if (tags.indexOf(tag) !== -1) {
-      tags.splice(articles.indexOf(tag), 1);
-    }
-  }
   return {
-    getArticles,
     validateArticle,
     getArticle,
     addArticle,
     editArticle,
     removeArticle,
     addTag,
-    removeTag,
     getTags,
-    getArticlesArray,
   };
 }());
 
@@ -209,17 +147,7 @@ const articleRenderer = (function () {
   }
 
   function formatDate(d) {
-    return (
-      `${d.getMonth() + 1
-      }/${
-      d.getDate()
-      }/${
-      d.getFullYear()
-      } ${
-      d.getHours()
-      }:${
-      d.getMinutes()}`
-    );
+    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
   }
   const renderArticle = function (article, articles) {
     TEMPLATE = getById('post-template');
@@ -297,7 +225,7 @@ const articleRenderer = (function () {
   };
 
   function renderArticles() {
-    const articles = articleModel.getArticles(0, loadedArticles, filter);
+    const articles = requestsHandler.getArticles(0, loadedArticles, filter);
     const remainder = articles.length % 4;
     for (let i = 0; i < articles.length - remainder; i += 4) {
       node.appendChild(renderArticle(articles[i], articles));
@@ -346,7 +274,7 @@ const articleRenderer = (function () {
   }
 
   function renderFilter() {
-    const articles = articleModel.getArticles(0, null, null);
+    const articles = requestsHandler.getArticles(0, null, null);
     const authorArray = [];
     for (let i = 0; i < articles.length; i++) {
       authorArray.push(articles[i].author);
@@ -356,9 +284,17 @@ const articleRenderer = (function () {
     removeOptions(master);
     for (let i = 0; i < unique.length; i++) {
       if (i === 0) {
-        master.options[master.options.length] = new Option('Any', 'any', true, false);
+        master.options[master.options.length] = new Option(
+          'Any',
+          'any',
+          true,
+          false);
       }
-      master.options[master.options.length] = new Option(unique[i], 'value', true, false);
+      master.options[master.options.length] = new Option(
+        unique[i],
+        'value',
+        true,
+        false);
     }
     if (!tagsLoaded) {
       let tagsId = 1;
@@ -413,6 +349,9 @@ function searchArticles() {
     const searchInfo = getById('search').value;
     if (searchInfo) {
       const currentConfig = {
+        author: '',
+        createdAt: '',
+        tags: [],
         title: '',
       };
       currentConfig.title = searchInfo;
@@ -423,7 +362,6 @@ function searchArticles() {
   }
 }
 function showMoreArticles() {
-  const articlesNumber = articleModel.getArticlesArray().length;
   loadedArticles += 4;
   while (loadedArticles > articlesNumber) {
     loadedArticles--;
@@ -447,6 +385,7 @@ function insertEditedArticle() {
     content: getById('change-news-text').value,
     imageSrc: getById('change-news-img-url').value,
   };
+  requestsHandler.editArticle(currentID, newArticle);
   articleRenderer.editArticleInDom(currentID, newArticle);
   getById('change').style.display = 'none';
   enableBody();
@@ -472,7 +411,7 @@ function getName(event) {
 }
 
 function viewArticle(articleId) {
-  const article = articleModel.getArticle(articleId);
+  const article = requestsHandler.getArticle(articleId);
   const date = article.createdAt;
   getById('view').style.display = 'block';
   document.body.classList.toggle('no-scroll', true);

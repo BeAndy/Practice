@@ -1,8 +1,20 @@
 /* global XMLHttpRequest reject*/
 const requestsHandler = (function get() {
   const req = new XMLHttpRequest();
-  function getArticles() {
-    req.open('GET', '/articles', false);
+
+  function convert(obj) {
+    const resultString = [];
+    if (!obj) {
+      return resultString;
+    }
+    Object.keys(obj).forEach(key =>
+      resultString.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`));
+    return resultString.join('&');
+  }
+
+  function getArticles(skip, top, filter) {
+    console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
+    req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
     req.setRequestHeader('content-type', 'application/json');
     req.send();
     const articles = JSON.parse(req.responseText);
@@ -11,6 +23,14 @@ const requestsHandler = (function get() {
     });
     return articles;
   }
+
+  function getArticlesNumber() {
+    req.open('GET', '/articlesNumber', false);
+    req.setRequestHeader('content-type', 'application/json');
+    req.send();
+    return req.responseText;
+  }
+
   function editArticle(id, article) {
     req.open('PUT', `/article/${id}`, false);
     req.setRequestHeader('content-type', 'application/json');
@@ -47,7 +67,9 @@ const requestsHandler = (function get() {
     };
     req.send();
   }
+
   return {
+    getArticlesNumber,
     getArticles,
     getArticle,
     deleteArticle,
