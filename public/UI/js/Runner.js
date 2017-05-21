@@ -1,10 +1,9 @@
-/* global serverModel document requestsHandler Option event // app*/
+/* global document requestsHandler Option event // app*/
 
-let articlesNumber = requestsHandler.getArticlesNumber();
 let user = 'BeAndy';
 let loadedArticles = 8;
 let filter = null;
-let lastID = ++articlesNumber;
+let lastID = new Date() / 1000;
 let tagsLoaded = false;
 console.log(lastID);
 
@@ -71,14 +70,16 @@ const articleModel = (function () {
     });
   }
   function addArticle(article) {
-    let isAdded = true;
-    if (!validateArticle(article)) {
-      isAdded = false;
-    } else {
-      article.id = article.id.toString();
-      requestsHandler.addArticle(article);
-    }
-    return isAdded;
+    return new Promise((resolve) => {
+      let isAdded = true;
+      if (!validateArticle(article)) {
+        isAdded = false;
+      } else {
+        article.id = article.id.toString();
+        requestsHandler.addArticle(article);
+        resolve(isAdded);
+      }
+    });
   }
 
   function copyObject(obj) {
@@ -93,16 +94,13 @@ const articleModel = (function () {
   }
 
   function removeArticle(id) {
-    //("IN DeleteArticle!");
     requestsHandler.deleteArticle(id);
   }
 
   function editArticle(id, article) {
     let isEdited = true;
     const currentArticle = requestsHandler.getArticleSync(id);
-    //(currentArticle.author);
     currentArticle.createdAt = new Date(currentArticle.createdAt);
-    //(currentArticle.title);
     const articleCopy = copyObject(currentArticle);
     removeArticle(currentArticle.id);
     Object.keys(article).forEach((key) => {
@@ -224,20 +222,25 @@ const articleRenderer = (function () {
     return postWrap;
   };
 
+  function renderArticlesAsync(articles) {
+    const remainder = articles.length % 4;
+    for (let i = 0; i < articles.length - remainder; i += 4) {
+      node.appendChild(renderArticle(articles[i], articles));
+    }
+    for (let i = remainder; i > 0; i--) {
+      node.appendChild(renderSinglePost(articles[articles.length - i]));
+    }
+  }
+
   function renderArticles() {
-  //  requestgetArticle(10);
-  //("IN RemArtFromDom");
-    //requestsHandler.getArticles(0, loadedArticles, filter).then((res) => {
-      const articles =  requestsHandler.getArticles(0, loadedArticles, filter);
-      //requestsHandler.getArticles(0, loadedArticles, filter);
-      const remainder = articles.length % 4;
-      for (let i = 0; i < articles.length - remainder; i += 4) {
-        node.appendChild(renderArticle(articles[i], articles));
-      }
-      for (let i = remainder; i > 0; i--) {
-        node.appendChild(renderSinglePost(articles[articles.length - i]));
-      }
-    //});
+    const articles = requestsHandler.getArticlesSync(0, loadedArticles, filter);
+    const remainder = articles.length % 4;
+    for (let i = 0; i < articles.length - remainder; i += 4) {
+      node.appendChild(renderArticle(articles[i], articles));
+    }
+    for (let i = remainder; i > 0; i--) {
+      node.appendChild(renderSinglePost(articles[articles.length - i]));
+    }
   }
 
   function renderHeader() {
@@ -279,7 +282,7 @@ const articleRenderer = (function () {
   }
 
   function renderFilter() {
-    const articles = requestsHandler.getArticles(0, null, null);
+    const articles = requestsHandler.getArticlesSync(0, null, null);
     const authorArray = [];
     for (let i = 0; i < articles.length; i++) {
       authorArray.push(articles[i].author);
@@ -312,23 +315,26 @@ const articleRenderer = (function () {
   }
 
   function removeArticlesFromDom() {
-    //("IN RemArtFD");
     getById('article-list').innerHTML = '';
   }
 
   function insertArticleInDom(article) {
-    articleModel.addArticle(article);
-    removeArticlesFromDom();
-    renderFilter();
-    renderArticles();
+    articleModel.addArticle(article).then(() => {
+      requestsHandler.getArticles(0, loadedArticles, filter).then((res) => {
+        removeArticlesFromDom();
+        renderFilter();
+        renderArticlesAsync(res);
+      });
+    });
   }
 
   function removeArticleFromDom(id) {
-    //("IN RemArtFromDom");
-    articleModel.removeArticle(id);
-    removeArticlesFromDom();
-    //renderFilter();
-    renderArticles();
+    requestsHandler.deleteArticle(id).then(() => {
+      requestsHandler.getArticles(0, loadedArticles, filter).then((res) => {
+        removeArticlesFromDom();
+        renderArticlesAsync(res);
+      });
+    });
   }
 
   function editArticleInDom(id, article) {
@@ -342,6 +348,7 @@ const articleRenderer = (function () {
     formatDate,
     init,
     renderArticles,
+    renderArticlesAsync,
     renderHeader,
     renderFilter,
     insertArticleInDom,
@@ -369,12 +376,15 @@ function searchArticles() {
   }
 }
 function showMoreArticles() {
+  const articlesNumber = requestsHandler.getArticlesNumber();
   loadedArticles += 4;
   while (loadedArticles > articlesNumber) {
     loadedArticles--;
   }
-  articleRenderer.removeArticlesFromDom();
-  articleRenderer.renderArticles();
+  requestsHandler.getArticles(0, loadedArticles, filter).then((res) => {
+    articleRenderer.removeArticlesFromDom();
+    articleRenderer.renderArticlesAsync(res);
+  });
 }
 
 function enableBody() {
@@ -497,7 +507,7 @@ function inputCheck() {
     articleRenderer.renderFilter();
     articleRenderer.renderArticles();
   } else {
-    //('So sorry =/');
+    alert('So sorry =/');
   }
 }
 

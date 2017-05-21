@@ -47,7 +47,6 @@ function filterArticles(skip, top, filter) {
     return true;
   });
   articlesArray.sort(comparator);
-  console.log('From filter '+ articlesArray);
   return articlesArray.slice(skip, top);
 }
 

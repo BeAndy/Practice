@@ -12,28 +12,7 @@ const requestsHandler = (function get() {
     return resultString.join('&');
   }
 
-  function getArticles(skip, top, filter) {
-   /* return new Promise((resolve, reject) => {
-      console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
-      req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
-      req.setRequestHeader('content-type', 'application/json');
-      req.send();
-      console.log('In getArticles!');
-      req.onload = function load() {
-        if (this.status === 200) {
-          const articles = JSON.parse(req.responseText);
-          console.log(articles);
-          articles.forEach((currentArticle) => {
-            currentArticle.createdAt = new Date(currentArticle.createdAt);
-          });
-          resolve(articles);
-        } else {
-          const error = new Error(this.statusText);
-          error.code = this.status;
-          reject(error);
-        }
-      };
-    });*/
+  function getArticlesSync(skip, top, filter) {
     console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
     req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
     req.setRequestHeader('content-type', 'application/json');
@@ -45,6 +24,31 @@ const requestsHandler = (function get() {
     return articles;
   }
 
+  function getArticles(skip, top, filter) {
+    return new Promise((resolve, reject) => {
+      console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
+      req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`);
+      req.setRequestHeader('content-type', 'application/json');
+      req.send();
+      console.log('In getArticles!');
+      req.onload = function load() {
+        if (this.status === 200) {
+          const articles = JSON.parse(req.responseText);
+          if (Array.isArray(articles)) {
+            articles.forEach((currentArticle) => {
+              currentArticle.createdAt = new Date(currentArticle.createdAt);
+            });
+          }
+          resolve(articles);
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+    });
+  }
+
   function getArticlesNumber() {
     req.open('GET', '/articlesNumber', false);
     req.setRequestHeader('content-type', 'application/json');
@@ -53,12 +57,23 @@ const requestsHandler = (function get() {
   }
 
   function editArticle(id, article) {
-    req.open('PUT', `/article/${id}`, false);
-    req.setRequestHeader('content-type', 'application/json');
-    req.onerror = function () {
-      reject(new Error('Error'));
-    };
-    req.send(JSON.stringify(article));
+    return new Promise((resolve, reject) => {
+      req.open('PUT', `/article/${id}`);
+      req.setRequestHeader('content-type', 'application/json');
+      req.send(JSON.stringify(article));
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve();
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+      req.onerror = function error() {
+        reject(new Error('Network Error'));
+      };
+    });
   }
 
   function getArticleSync(id) {
@@ -74,6 +89,7 @@ const requestsHandler = (function get() {
   function getArticle(id) {
     return new Promise((resolve, reject) => {
       req.open('GET', `/article/${id}`);
+      req.setRequestHeader('content-type', 'application/json');
       req.send();
       req.onload = function load() {
         if (this.status === 200) {
@@ -95,13 +111,15 @@ const requestsHandler = (function get() {
       req.open('POST', '/article');
       req.setRequestHeader('content-type', 'application/json');
       req.send(JSON.stringify(article));
-      if (this.status === 200) {
-        resolve();
-      } else {
-        const error = new Error(this.statusText);
-        error.code = this.status;
-        reject(error);
-      }
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve();
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
       req.onerror = function error() {
         reject(new Error('Network Error'));
       };
@@ -131,6 +149,7 @@ const requestsHandler = (function get() {
   return {
     getArticlesNumber,
     getArticles,
+    getArticlesSync,
     getArticle,
     deleteArticle,
     addArticle,
