@@ -13,6 +13,27 @@ const requestsHandler = (function get() {
   }
 
   function getArticles(skip, top, filter) {
+   /* return new Promise((resolve, reject) => {
+      console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
+      req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
+      req.setRequestHeader('content-type', 'application/json');
+      req.send();
+      console.log('In getArticles!');
+      req.onload = function load() {
+        if (this.status === 200) {
+          const articles = JSON.parse(req.responseText);
+          console.log(articles);
+          articles.forEach((currentArticle) => {
+            currentArticle.createdAt = new Date(currentArticle.createdAt);
+          });
+          resolve(articles);
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+    });*/
     console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
     req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
     req.setRequestHeader('content-type', 'application/json');
@@ -40,7 +61,7 @@ const requestsHandler = (function get() {
     req.send(JSON.stringify(article));
   }
 
-  function getArticle(id) {
+  function getArticleSync(id) {
     req.open('GET', `/article/${id}`, false);
     req.setRequestHeader('content-type', 'application/json');
     req.send();
@@ -50,22 +71,61 @@ const requestsHandler = (function get() {
     return article;
   }
 
+  function getArticle(id) {
+    return new Promise((resolve, reject) => {
+      req.open('GET', `/article/${id}`);
+      req.send();
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve(req.responseText);
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+      req.onerror = function error() {
+        reject(new Error('Network Error'));
+      };
+    });
+  }
+
   function addArticle(article) {
-    req.open('POST', '/article', false);
-    req.setRequestHeader('content-type', 'application/json');
-    req.onerror = function () {
-      reject(new Error('Error'));
-    };
-    req.send(JSON.stringify(article));
+    return new Promise((resolve, reject) => {
+      req.open('POST', '/article');
+      req.setRequestHeader('content-type', 'application/json');
+      req.send(JSON.stringify(article));
+      if (this.status === 200) {
+        resolve();
+      } else {
+        const error = new Error(this.statusText);
+        error.code = this.status;
+        reject(error);
+      }
+      req.onerror = function error() {
+        reject(new Error('Network Error'));
+      };
+    });
   }
 
   function deleteArticle(id) {
-    req.open('DELETE', `/articles/${id}`, false);
-    req.setRequestHeader('content-type', 'application/json');
-    req.onerror = function () {
-      reject(new Error('Error'));
-    };
-    req.send();
+    return new Promise((resolve, reject) => {
+      req.open('DELETE', `/articles/${id}`);
+      req.setRequestHeader('content-type', 'application/json');
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve();
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+      req.onerror = function error() {
+        reject(new Error('Network Error'));
+      };
+      req.send();
+    });
   }
 
   return {
@@ -75,5 +135,6 @@ const requestsHandler = (function get() {
     deleteArticle,
     addArticle,
     editArticle,
+    getArticleSync,
   };
 }());

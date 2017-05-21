@@ -1,4 +1,4 @@
-/* global document requestsHandler Option event alert app*/
+/* global serverModel document requestsHandler Option event // app*/
 
 let articlesNumber = requestsHandler.getArticlesNumber();
 let user = 'BeAndy';
@@ -64,9 +64,12 @@ const articleModel = (function () {
   }
 
   function getArticle(id) {
-    return requestsHandler.getArticle(id);
+    requestsHandler.getArticle(id).then((result) => {
+      const article = JSON.parse(result);
+      article.createdAt = new Date(article.createdAt);
+      return article;
+    });
   }
-
   function addArticle(article) {
     let isAdded = true;
     if (!validateArticle(article)) {
@@ -90,20 +93,17 @@ const articleModel = (function () {
   }
 
   function removeArticle(id) {
-    let isRemoved = true;
-    const articleToDelete = getArticle(id);
-    if (articleToDelete === null) {
-      isRemoved = false;
-    } else {
-      requestsHandler.deleteArticle(id);
-    }
-    return isRemoved;
+    //("IN DeleteArticle!");
+    requestsHandler.deleteArticle(id);
   }
 
   function editArticle(id, article) {
-    const currentArticle = getArticle(id);
-    const articleCopy = copyObject(currentArticle);
     let isEdited = true;
+    const currentArticle = requestsHandler.getArticleSync(id);
+    //(currentArticle.author);
+    currentArticle.createdAt = new Date(currentArticle.createdAt);
+    //(currentArticle.title);
+    const articleCopy = copyObject(currentArticle);
     removeArticle(currentArticle.id);
     Object.keys(article).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(articleCopy, key)) {
@@ -225,14 +225,19 @@ const articleRenderer = (function () {
   };
 
   function renderArticles() {
-    const articles = requestsHandler.getArticles(0, loadedArticles, filter);
-    const remainder = articles.length % 4;
-    for (let i = 0; i < articles.length - remainder; i += 4) {
-      node.appendChild(renderArticle(articles[i], articles));
-    }
-    for (let i = remainder; i > 0; i--) {
-      node.appendChild(renderSinglePost(articles[articles.length - i]));
-    }
+  //  requestgetArticle(10);
+  //("IN RemArtFromDom");
+    //requestsHandler.getArticles(0, loadedArticles, filter).then((res) => {
+      const articles =  requestsHandler.getArticles(0, loadedArticles, filter);
+      //requestsHandler.getArticles(0, loadedArticles, filter);
+      const remainder = articles.length % 4;
+      for (let i = 0; i < articles.length - remainder; i += 4) {
+        node.appendChild(renderArticle(articles[i], articles));
+      }
+      for (let i = remainder; i > 0; i--) {
+        node.appendChild(renderSinglePost(articles[articles.length - i]));
+      }
+    //});
   }
 
   function renderHeader() {
@@ -307,28 +312,30 @@ const articleRenderer = (function () {
   }
 
   function removeArticlesFromDom() {
+    //("IN RemArtFD");
     getById('article-list').innerHTML = '';
   }
 
   function insertArticleInDom(article) {
     articleModel.addArticle(article);
     removeArticlesFromDom();
-    renderArticles();
     renderFilter();
+    renderArticles();
   }
 
   function removeArticleFromDom(id) {
+    //("IN RemArtFromDom");
     articleModel.removeArticle(id);
     removeArticlesFromDom();
+    //renderFilter();
     renderArticles();
-    renderFilter();
   }
 
   function editArticleInDom(id, article) {
     articleModel.editArticle(id, article);
     removeArticlesFromDom();
-    renderArticles();
     renderFilter();
+    renderArticles();
   }
 
   return {
@@ -385,7 +392,6 @@ function insertEditedArticle() {
     content: getById('change-news-text').value,
     imageSrc: getById('change-news-img-url').value,
   };
-  requestsHandler.editArticle(currentID, newArticle);
   articleRenderer.editArticleInDom(currentID, newArticle);
   getById('change').style.display = 'none';
   enableBody();
@@ -411,30 +417,36 @@ function getName(event) {
 }
 
 function viewArticle(articleId) {
-  const article = requestsHandler.getArticle(articleId);
-  const date = article.createdAt;
-  getById('view').style.display = 'block';
-  document.body.classList.toggle('no-scroll', true);
+  requestsHandler.getArticle(articleId).then((result) => {
+    const article = JSON.parse(result);
+    article.createdAt = new Date(article.createdAt);
+    const date = article.createdAt;
 
-  select(document, '.vew-author-text').innerHTML = article.author;
-  select(document, '.vew-time-text').innerHTML = article.createdAt;
-  select(document, '.vew-tag-text').innerHTML = article.tags.join();
-  select(document, '.vew-time-text').innerHTML = articleRenderer.formatDate(date);
-  select(document, '.view-head').innerHTML = article.title;
-  select(document, '.img-view').src = article.imageSrc;
-  select(document, '.view-text-content').innerHTML = article.content;
+    getById('view').style.display = 'block';
+    document.body.classList.toggle('no-scroll', true);
+    select(document, '.vew-author-text').innerHTML = article.author;
+    select(document, '.vew-time-text').innerHTML = article.createdAt;
+    select(document, '.vew-tag-text').innerHTML = article.tags.join();
+    select(document, '.vew-time-text').innerHTML = articleRenderer.formatDate(date);
+    select(document, '.view-head').innerHTML = article.title;
+    select(document, '.img-view').src = article.imageSrc;
+    select(document, '.view-text-content').innerHTML = article.content;
+  });
 }
 
 function saveEditedArticle(articleId) {
-  const currentArticle = articleModel.getArticle(articleId);
-  getById('change').style.display = 'block';
-  document.body.classList.toggle('no-scroll', true);
-  getById('change-news-author').value = currentArticle.author;
-  getById('change-news-tags').value = currentArticle.tags.join();
-  getById('change-news-head').value = currentArticle.title;
-  getById('change-news-id').innerHTML = currentArticle.id;
-  getById('change-news-img-url').value = currentArticle.imageSrc;
-  getById('change-news-text').value = currentArticle.content;
+  requestsHandler.getArticle(articleId).then((result) => {
+    const article = JSON.parse(result);
+    article.createdAt = new Date(article.createdAt);
+    getById('change').style.display = 'block';
+    document.body.classList.toggle('no-scroll', true);
+    getById('change-news-author').value = article.author;
+    getById('change-news-tags').value = article.tags.join();
+    getById('change-news-head').value = article.title;
+    getById('change-news-id').innerHTML = article.id;
+    getById('change-news-img-url').value = article.imageSrc;
+    getById('change-news-text').value = article.content;
+  });
 }
 
 function eventPost(event) {
@@ -481,20 +493,20 @@ function inputCheck() {
   if (checkLogin(inputUser, inputPass)) {
     getById('login-template').style.display = 'none';
     articleRenderer.removeArticlesFromDom();
-    articleRenderer.renderArticles();
     articleRenderer.renderHeader();
     articleRenderer.renderFilter();
+    articleRenderer.renderArticles();
   } else {
-    alert('So sorry =/');
+    //('So sorry =/');
   }
 }
 
 function logOut() {
   user = null;
   articleRenderer.removeArticlesFromDom();
-  articleRenderer.renderArticles();
   articleRenderer.renderHeader();
   articleRenderer.renderFilter();
+  articleRenderer.renderArticles();
 }
 
 function userStatus() {
@@ -571,9 +583,9 @@ function addEventListeners() {
 
 function startApp() {
   articleRenderer.init();
-  articleRenderer.renderArticles();
   articleRenderer.renderHeader();
   articleRenderer.renderFilter();
+  articleRenderer.renderArticles();
 }
 
 document.addEventListener('DOMContentLoaded', startApp);
