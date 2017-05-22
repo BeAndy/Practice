@@ -1,11 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dataBase = require('diskdb');
+const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+const session = require('express-session');
+const SessionFS = require('session-file-store')(session);
+const bCrypt = require('bcrypt');
 
 const app = express();
-dataBase.connect('public/db', ['articles']);
+dataBase.connect('public/db', ['articles', 'users']);
 app.use(express.static('public/UI'));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+  session({
+    secret: '536bc14fb8063107084ed399bf2bb2b1',
+    store: new SessionFS(),
+    saveUninitialized: true,
+    resave: false,
+  }));
 
 function comparator(first, second) {
   return first.createdAt < second.createdAt ? 1 : -1;
@@ -24,7 +39,6 @@ function compareDate(first, second) {
 }
 
 function filterArticles(skip, top, filter) {
-  console.log('filter is here!');
   const articlesArray = dataBase.articles.find().filter((article) => {
     if (filter.tags) {
       for (let i = 0; i < filter.tags.length; i++) {
@@ -84,4 +98,37 @@ app.put('/articles/', (req, res) => {
 
 app.listen(3000, () => {
   console.log('App is listening on port 3000!');
+});
+
+
+passport.serializeUser((user, done) => done(null, user));
+
+passport.deserializeUser((user, done) => {
+  const err = user ? null : new Error('deserialize');
+  done(err, user);
+});
+
+const isValidPassword = (user, password) => (bCrypt.compareSync(user.password, password));
+
+passport.use('login', new LocalStrategy({
+  passReqToCallback: true,
+},
+(req, username, password, done) => {
+  const user = dataBase.users.findOne({ username });
+  if (!user) {
+    return done(null, false);
+  }
+  console.log(bCrypt.compareSync(user.password, password));
+  if (password !== user.password) {
+    return done(null, false);
+  }
+  return done(null, user);
+}));
+
+app.post('/login', passport.authenticate('login'), (req, res) => {
+  res.send(req.user.username);
+});
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.sendStatus(200);
 });

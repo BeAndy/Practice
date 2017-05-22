@@ -1,11 +1,10 @@
-/* global document requestsHandler Option event // app*/
+/* global document requestsHandler Option authorization event // app*/
 
-let user = 'BeAndy';
+let user = null;
 let loadedArticles = 8;
 let filter = null;
-let lastID = new Date() / 1000;
+let lastId = new Date() / 1000;
 let tagsLoaded = false;
-console.log(lastID);
 
 function getById(currentId) {
   return document.getElementById(currentId);
@@ -344,6 +343,27 @@ const articleRenderer = (function () {
     renderArticles();
   }
 
+  function logIn(username) {
+    requestsHandler.logIn(username).then((res) => {
+      console.log(res);
+      user = res;
+      getById('login-template').style.display = 'none';
+      articleRenderer.removeArticlesFromDom();
+      articleRenderer.renderHeader();
+      articleRenderer.renderFilter();
+      articleRenderer.renderArticles();
+    }).catch(() => console.log('Invalid auth data'));
+  }
+  function logOut() {
+    requestsHandler.logOut().then(() => {
+      user = null;
+      articleRenderer.removeArticlesFromDom();
+      articleRenderer.renderHeader();
+      articleRenderer.renderFilter();
+      articleRenderer.renderArticles();
+    }).catch(() => console.log('Invalid auth data'));
+  }
+
   return {
     formatDate,
     init,
@@ -355,6 +375,8 @@ const articleRenderer = (function () {
     removeArticleFromDom,
     removeArticlesFromDom,
     editArticleInDom,
+    logIn,
+    logOut,
   };
 }());
 
@@ -407,9 +429,9 @@ function insertEditedArticle() {
   enableBody();
 }
 function saveArticle() {
-  lastID++;
+  lastId++;
   const newArticle = {
-    id: lastID,
+    id: lastId,
     title: getById('new-news-head').value,
     summary: getById('new-news-text').value.substr(0, 190),
     createdAt: new Date(),
@@ -489,39 +511,16 @@ function eventPost(event) {
   }
 }
 
-function checkLogin(log, pass) {
-  if (log === 'admin' && pass === 'admin') {
-    user = 'BeAndy';
-    return true;
-  }
-  return false;
-}
-
-function inputCheck() {
-  const inputUser = getById('username').value;
-  const inputPass = getById('password').value;
-  if (checkLogin(inputUser, inputPass)) {
-    getById('login-template').style.display = 'none';
-    articleRenderer.removeArticlesFromDom();
-    articleRenderer.renderHeader();
-    articleRenderer.renderFilter();
-    articleRenderer.renderArticles();
-  } else {
-    alert('So sorry =/');
-  }
-}
-
-function logOut() {
-  user = null;
-  articleRenderer.removeArticlesFromDom();
-  articleRenderer.renderHeader();
-  articleRenderer.renderFilter();
-  articleRenderer.renderArticles();
+function checkInput() {
+  const username = getById('username').value;
+  const password = getById('password').value;
+  console.log('INPUT!');
+  articleRenderer.logIn({ username, password });
 }
 
 function userStatus() {
   if (user !== null) {
-    logOut();
+    articleRenderer.logOut();
   } else {
     getById('login-template').style.display = 'block';
   }
@@ -568,7 +567,7 @@ function addEventListeners() {
   const postListNodes = getById('article-list');
   postListNodes.addEventListener('click', eventPost);
   const login = getById('submit');
-  login.addEventListener('click', inputCheck);
+  login.addEventListener('click', checkInput);
 
   const sign = select(document, '.button-sign');
   sign.addEventListener('click', userStatus);

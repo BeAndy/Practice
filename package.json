@@ -9,9 +9,14 @@
   "author": "BeAndy",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "diskdb": "^0.1.17",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "express-session": "^1.15.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "session-file-store": "^1.0.0"
   },
   "repository": {
     "type": "git",

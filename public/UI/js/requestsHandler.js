@@ -46,6 +46,9 @@ const requestsHandler = (function get() {
           reject(error);
         }
       };
+      req.onerror = function error() {
+        reject(new Error('Network Error'));
+      };
     });
   }
 
@@ -145,6 +148,39 @@ const requestsHandler = (function get() {
       req.send();
     });
   }
+  
+  function logIn(user) {
+    return new Promise((resolve, reject) => {
+      req.open('POST', '/login');
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.send(JSON.stringify(user));
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve(req.responseText);
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+    });
+  }
+
+  function logOut() {
+    return new Promise((resolve, reject) => {
+      req.open('GET', '/logout');
+      req.send();
+      req.onload = function load() {
+        if (this.status === 200) {
+          resolve();
+        } else {
+          const error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+    });
+  }
 
   return {
     getArticlesNumber,
@@ -155,5 +191,7 @@ const requestsHandler = (function get() {
     addArticle,
     editArticle,
     getArticleSync,
+    logIn,
+    logOut,
   };
 }());
