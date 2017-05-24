@@ -466,7 +466,7 @@ function viewArticle(articleId) {
   });
 }
 
-function saveEditedArticle(articleId) {
+function renderEditedArticle(articleId) {
   requestsHandler.getArticle(articleId).then((result) => {
     const article = JSON.parse(result);
     article.createdAt = new Date(article.createdAt);
@@ -507,7 +507,7 @@ function eventPost(event) {
       curEvent = curEvent.parentElement;
     }
     const changeID = Number(curEvent.getAttribute('id'));
-    saveEditedArticle(changeID);
+    renderEditedArticle(changeID);
   }
 }
 

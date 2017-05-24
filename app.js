@@ -6,6 +6,9 @@ const passport = require('passport');
 const session = require('express-session');
 const SessionFS = require('session-file-store')(session);
 const bCrypt = require('bcrypt');
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://articles:q@ds149431.mlab.com:49431/innews';
 
 const app = express();
 dataBase.connect('public/db', ['articles', 'users']);
@@ -38,34 +41,13 @@ function compareDate(first, second) {
   return new Date(first.createdAt).getDate() === second.createdAt.getDate();
 }
 
-function filterArticles(skip, top, filter) {
-  const articlesArray = dataBase.articles.find().filter((article) => {
-    if (filter.tags) {
-      for (let i = 0; i < filter.tags.length; i++) {
-        if (article.tags.indexOf(filter.tags[i]) === -1) return false;
-      }
-    }
-    if (filter.author && filter.author !== 'null') {
-      if (article.author !== filter.author) return false;
-    }
-    if (filter.title) {
-      return article.title.includes(filter.title);
-    }
-
-    if (filter.createdAt) {
-      let isValid = compareYear(article, filter);
-      isValid = compareMonth(article, filter);
-      isValid = compareDate(article, filter);
-      return isValid;
-    }
-    return true;
-  });
-  articlesArray.sort(comparator);
-  return articlesArray.slice(skip, top);
-}
-
 app.get('/articlesNumber', (req, res) => {
-  res.json(dataBase.articles.count());
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').find().count().then((number) => {
+      res.json(number);
+      db.close();
+    });
+  });
 });
 
 app.get('/articles', (req, res) => {
@@ -77,27 +59,89 @@ app.get('/articles', (req, res) => {
   };
   const skip = Number(req.query.skip) || 0;
   const top = Number(req.query.top) || dataBase.articles.count();
-  res.json(filterArticles(skip, top, filter));
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').find().toArray().then((articlesArray) => {
+      articlesArray = articlesArray.filter((article) => {
+        if (filter.tags) {
+          for (let i = 0; i < filter.tags.length; i++) {
+            if (article.tags.indexOf(filter.tags[i]) === -1) return false;
+          }
+        }
+        if (filter.author && filter.author !== 'null') {
+          if (article.author !== filter.author) return false;
+        }
+        if (filter.title) {
+          return article.title.includes(filter.title);
+        }
+
+        if (filter.createdAt) {
+          let isValid = compareYear(article, filter);
+          isValid = compareMonth(article, filter);
+          isValid = compareDate(article, filter);
+          return isValid;
+        }
+        return true;
+      });
+      articlesArray.sort(comparator);
+      db.close();
+      res.json(articlesArray.slice(skip, top));
+    });
+  });
 });
 
 app.get('/article/:id', (req, res) => {
-  res.json(dataBase.articles.findOne({ id: req.params.id }));
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').findOne({ id: req.params.id }).then((item) => {
+      res.json(item);
+      db.close();
+    });
+  });
 });
 
 app.post('/article', (req, res) => {
   res.json(dataBase.articles.save(req.body));
+  const current = {
+    id: req.body.id,
+    title: req.body.title,
+    summary: req.body.summary,
+    createdAt: req.body.createdAt,
+    tags: req.body.tags,
+    author: req.body.author,
+    content: req.body.content,
+    imageSrc: req.body.imageSrc,
+  };
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').insertOne(current, () => {
+      db.close();
+    });
+  });
 });
 
-app.delete('/articles/:id', (req, res) => {
-  res.json(dataBase.articles.remove({ id: req.params.id }));
+app.delete('/articles/:id', (req) => {
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').deleteOne({ id: req.params.id }, () => {
+      db.close();
+    });
+  });
 });
 
-app.put('/articles/', (req, res) => {
-  res.json(dataBase.articles.update({ id: req.body.id }, req.body));
+app.put('/articles/', (req) => {
+  const current = {
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
+  };
+  MongoClient.connect(url, (err, db) => {
+    db.collection('user-data').updateOne({ id: req.body.id }, { $set: current }, () => {
+      db.close();
+    });
+  });
 });
 
-app.listen(3000, () => {
-  console.log('App is listening on port 3000!');
+MongoClient.connect(url, () => {
+  app.listen(3000, () => {
+    console.log('App is listening on port 3000!');
+  });
 });
 
 
@@ -108,27 +152,31 @@ passport.deserializeUser((user, done) => {
   done(err, user);
 });
 
-const isValidPassword = (user, password) => (bCrypt.compareSync(user.password, password));
-
 passport.use('login', new LocalStrategy({
   passReqToCallback: true,
 },
 (req, username, password, done) => {
-  const user = dataBase.users.findOne({ username });
-  if (!user) {
-    return done(null, false);
-  }
-  console.log(bCrypt.compareSync(user.password, password));
-  if (password !== user.password) {
-    return done(null, false);
-  }
-  return done(null, user);
+  MongoClient.connect(url, (err, db) => {
+    db.collection('users').findOne({ username }).then((user) => {
+      if (!user) {
+        return done(null, false);
+      }
+      console.log(bCrypt.compareSync(user.password, password));
+      if (password !== user.password) {
+        return done(null, false);
+      }
+      db.close();
+      return done(null, user);
+    });
+  });
 }));
 
 app.post('/login', passport.authenticate('login'), (req, res) => {
   res.send(req.user.username);
 });
+
 app.get('/logout', (req, res) => {
   req.logout();
   res.sendStatus(200);
 });
+
