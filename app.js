@@ -83,7 +83,6 @@ app.get('/articles', (req, res) => {
         return true;
       });
       articlesArray.sort(comparator);
-      db.close();
       res.json(articlesArray.slice(skip, top));
     });
   });
@@ -117,15 +116,16 @@ app.post('/article', (req, res) => {
   });
 });
 
-app.delete('/articles/:id', (req) => {
+app.delete('/articles/:id', (req, res) => {
   MongoClient.connect(url, (err, db) => {
     db.collection('user-data').deleteOne({ id: req.params.id }, () => {
       db.close();
+      res.sendStatus(200);
     });
   });
 });
 
-app.put('/articles/', (req) => {
+app.put('/articles/', (req, res) => {
   const current = {
     title: req.body.title,
     content: req.body.content,
@@ -134,6 +134,7 @@ app.put('/articles/', (req) => {
   MongoClient.connect(url, (err, db) => {
     db.collection('user-data').updateOne({ id: req.body.id }, { $set: current }, () => {
       db.close();
+      res.sendStatus(200);
     });
   });
 });
@@ -161,7 +162,6 @@ passport.use('login', new LocalStrategy({
       if (!user) {
         return done(null, false);
       }
-      console.log(bCrypt.compareSync(user.password, password));
       if (password !== user.password) {
         return done(null, false);
       }

@@ -24,7 +24,11 @@ input.edit-head {
 }
 
 p.edit-title {
-    margin-top: 80px;
+    margin-top: 35px;
+
+}
+p.edit-title-add {
+    margin-top: 0px;
 
 }
 
@@ -45,7 +49,7 @@ p.edit-title {
 }
 
 textarea.edit {
-    width: 90%;
+    width: 80%;
     height: 40vh;
     margin-left: 3%;
     box-sizing: border-box;
@@ -66,6 +70,7 @@ textarea.edit {
 }
 
 .button-save {
+    width: 80%;
     margin-top: 7vh;
     position: relative;
     background-color: #4CAF50;
@@ -80,6 +85,7 @@ textarea.edit {
 }
 
 .button-save-change {
+    width: 80%;
     margin-top: 7vh;
     position: relative;
     background-color: #4CAF50;

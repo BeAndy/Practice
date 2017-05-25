@@ -1,8 +1,4 @@
 /* global document window */
-document.querySelector('.button-add').addEventListener('click', function () {
-  const body = document.body;
-  body.classList.toggle('no-scroll', true);
-});
 function getById(currentId) {
   return document.getElementById(currentId);
 }

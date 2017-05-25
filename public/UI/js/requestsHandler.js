@@ -13,7 +13,6 @@ const requestsHandler = (function get() {
   }
 
   function getArticlesSync(skip, top, filter) {
-    console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
     req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`, false);
     req.setRequestHeader('content-type', 'application/json');
     req.send();
@@ -26,11 +25,9 @@ const requestsHandler = (function get() {
 
   function getArticles(skip, top, filter) {
     return new Promise((resolve, reject) => {
-      console.log(`/articles?top=${top}&skip=${skip}&${convert(filter)}`);
       req.open('GET', `/articles?top=${top}&skip=${skip}&${convert(filter)}`);
       req.setRequestHeader('content-type', 'application/json');
       req.send();
-      console.log('In getArticles!');
       req.onload = function load() {
         if (this.status === 200) {
           const articles = JSON.parse(req.responseText);
@@ -85,7 +82,6 @@ const requestsHandler = (function get() {
     req.send();
     const article = JSON.parse(req.responseText);
     article.createdAt = new Date(article.createdAt);
-    console.log(article.author);
     return article;
   }
 
@@ -148,7 +144,7 @@ const requestsHandler = (function get() {
       req.send();
     });
   }
-  
+
   function logIn(user) {
     return new Promise((resolve, reject) => {
       req.open('POST', '/login');
