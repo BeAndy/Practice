@@ -82,20 +82,19 @@
     <div class="full-view-style animate">
         <div class="view-left">
             <div class="edit-author">
-                <a class="vew-author-text">Author</a>
-                <input id="new-news-author" type="text" class="edit">
-                <p class="edit-title">#Tags</p>
-                <input id='new-news-tags' type="text" class="edit">
+                <p class="edit-title-add">#Tags</p>
+                <textarea id = "tags-area" readonly="true"></textarea>
+                <input id="new-news-tags" type="text" class="edit" placeholder="Enter tags" >
                 <button class="button-save">Add</button>
             </div>
         </div>
         <div class="view-right">
             <div class="edit-title-head"> Title</div>
-            <input type="text" class="edit-head" id="new-news-head">
+            <input type="text" class="edit-head" id="new-news-head" placeholder="Article title">
             <div class="edit-title-head"> Image URL</div>
-            <input type="text" class="edit-head" id="new-news-img-url" >
+            <input type="text" class="edit-head" id="new-news-img-url" placeholder="Image url (optional)">
             <div class="edit-title-head"> Text</div>
-            <textarea id='new-news-text' class="edit"></textarea>
+            <textarea id="new-news-text" class="edit" placeholder="Article text"></textarea>
             <div class="view-empty"></div>
         </div>
     </div>
@@ -106,8 +105,10 @@
         <div class="view-left">
             <div class="edit-author">
                 <a class="vew-author-text">Author</a>
-                <input id="change-news-author" type="text" class="edit">
+                <input id="change-news-author" type="text" readonly="true" class="edit">
                 <p class="edit-title">#Tags</p>
+                <textarea id = "change-tags-area" readonly="true"></textarea>
+                <p class="edit-title">Current</p>
                 <input id='change-news-tags' type="text" class="edit">
                 <p class="edit-title">ID</p>
                 <p id='change-news-id'></p>
@@ -247,9 +248,10 @@
 <div align="center">
     <button class="show-more">Show more</button>
 </div>
-<script src="js/Runner.js" type="text/javascript"></script>
-<script src="js/view.js" type="text/javascript"></script>
-</body>
+<script src="js/requestsHandler.js" type="text/javascript"></script>
+<script src="js/articleRenderer.js" type="text/javascript"></script>
+<script src="js/articleModel.js" type="text/javascript"></script>
+<script src="js/view.js" type="text/javascript"></script></body>
 <footer>
     <div class="footer">
         <p>Copyright © 2017 INNEWS. Belous Andrew 8 group. andy.belous77@gmail.com 26.02.2017</p>

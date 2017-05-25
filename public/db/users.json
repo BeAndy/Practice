@@ -1,0 +1,18 @@
+[
+    {
+        "username": "BeAndy",
+        "password": "$2y$10$UgBuUsl561fuzV/DVfkq9OW9q9LhAo3NR8eqH7sspK5f9bgaBFxmy"
+    },
+    {
+        "username": "MrAdmin",
+        "password": "qwerty"
+    },
+    {
+        "username": "MsAdmin",
+        "password": "qwerty"
+    },
+    {
+        "username": "admin",
+        "password": "admin"
+    }
+]
