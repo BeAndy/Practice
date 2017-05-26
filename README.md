@@ -21,3 +21,8 @@ mongoexport -h ds149431.mlab.com:49431 -d innews -c users -u BeAndy -p 1234qweas
 or https://mlab.com/databases/innews 
 user: BeAndy 
 password: 1234qweasd
+
+
+Запускать базу не нужно : она хранится на https://mlab.com/databases/innews.
+
+Экспорт данных был описан для того, чтобы проверяющие могли отслеживать ее содержимое.
